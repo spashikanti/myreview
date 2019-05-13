@@ -1,0 +1,108 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_UserLayout</title>
+
+    <!-- Bootstrap CSS -->
+   
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <title>My Review!</title>
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <script src="valid.js" type="text/javascript"></script>
+</head>
+<body>
+    <nav class="navbar navbar-light navbar-expand-xs" style="background-color: #e3f2fd;">
+        <!-- Navbar content -->
+        <a class="navbar-brand" href="#">
+            <img src="~/Content/img/logo.png" height="50px" ; />
+
+            <span class="text-primary">My Review</span>
+        </a>
+        <!-- <button class="navbar-toggler .d-lg-none .d-xl-block" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button> -->
+        <div class="" id="navbarSupportedContent">
+            <nav class="nav">
+                <a class="nav-link active " href="#">Login</a>
+                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-danger">Sign Up</button></a>
+                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success">Write a Review</button></a>
+            </nav>
+        </div>
+    </nav>
+    @*<div id="carouselExampleControls">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="~/Content/img/writereview.jpg" height="500px;" class="d-block w-100" alt="...">
+                </div>
+
+            </div>
+
+        </div>*@
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
+
+    <footer class="" style="background-color: #e3f2fd;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link active p-1 m-0" href="#">Home |</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1 m-0" href="#">About Us |</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1 m-0" href="#">Contact Us |</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1 m-0" href="#">Terms & Conditions |</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1 m-0" href="#">Blog |</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1 m-0" href="#">Help</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#"><img src="~/Content/img/facebook.png" width="40px" height="40px" /></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><img src="~/Content/img/linkedin.png" width="40px" height="40px" /></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><img src="~/Content/img/google.png" width="40px" height="40px" /></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><img src="~/Content/img/twitter.png" width="40px" height="40px" /></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p class="text-center text-dark p-2 m-2">copyright&copy;2019 - All Rights Reserved</p>
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+</body>
+</html>

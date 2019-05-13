@@ -1,0 +1,30 @@
+﻿@model MyReview.Models.CategoryModel
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_Administrator.cshtml";
+}
+
+<h2>Category</h2>
+@using (Html.BeginForm("Index", "Category", FormMethod.Post))
+{
+    @Html.Label("Category:")
+    <br />
+    <br />
+    @Html.ListBoxFor(m => m.CategoryId, Model.CategoryName)
+    <br />
+    <br />
+    <input type="submit" value="Edit" />
+    <input type="button"
+           class="btn"
+           value="New Category"
+           onclick="location.href='@Url.Action("Index","NewCategory" )'" />
+}
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+    </script>
+}
+

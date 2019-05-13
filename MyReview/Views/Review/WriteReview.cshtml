@@ -1,0 +1,180 @@
+﻿
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+   <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>My Review!</title>
+
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="~/Scripts/valid.js"></script>
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-light navbar-expand-xs" style="background-color: #e3f2fd;">
+        <!-- Navbar content -->
+        <a class="navbar-brand" href="#">
+            <img src="~/Content/img/logo.png" height="30px" />
+            <!-- <span class="text-primary">My Review</span> -->
+        </a>
+        <!-- <button class="navbar-toggler .d-lg-none .d-xl-block" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button> -->
+        <div class="" id="navbarSupportedContent">
+            <nav class="nav">
+                <a class="nav-link active " href="#">Login</a>
+                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-danger">Sign Up</button></a>
+                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("Index","Review" )'">My Review</button></a>
+                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("AllReview","Review" )'">All Review</button></a>
+            </nav>
+        </div>
+    </nav>
+
+
+    <div class="container cont-new">
+        <h4>Write a Review on Products and Services</h4>
+        <div class="row">
+            <div class="col-md-12 srch-panel">
+
+                <div class="search-container">
+                    <form action="/action_page.php">
+
+                        <input type="text" placeholder="Search for products, brands, services, movies, places, etc." name="search" class="serchnew-input">
+                        <button> <i class="fa fa-search"></i> </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        
+
+
+
+
+    </div>
+    <br><br>
+
+    <div class="container cont-new">
+        <h4>Write a Review on MI NOTE 7</h4>
+        <div class="row">
+            <div class="col-md-8 srch-panel">
+
+                <form>
+                    <div class="radio">
+                        <label><span class="red">*</span> <span class="serch-input">Do you like this product?</span>  </label>  &nbsp;&nbsp;&nbsp;&nbsp;
+                        <label><input type="radio" name="optradio" checked>Yes</label>
+                        <label><input type="radio" name="optradio">No</label>
+                    </div>
+
+                </form>
+
+                <div class="radio">
+                    <label><span class="red">*</span><span class="serch-input"> Star Rating </span>  </label>  &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </div>
+                <div class="radio">
+                    <input type="text" name="firstname" class="fild serch-input " placeholder="Your review title will attract readers, so be creative.">
+                </div>
+                <div class="mt-top">
+                    <textarea rows="4" cols="100" name="comment" form="usrform" class="serch-input" placeholder="Write your review about the product.">
+</textarea>
+                    <form action="/action_page.php">
+                        <input type="file" name="pic" accept="image/*" placeholder="Upload Photo">
+
+                    </form>
+
+                </div>
+                <div class="mt-top">
+                    <button type="button" class="btn btn-success">Submit Review</button>
+
+                </div>
+            </div>
+            <div class="col-md-4 srch-panel">
+                <img src="~/Content/img/redmi7.jpg" width="300">
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+
+    <footer class="" style="background-color: #e3f2fd;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link active p-1 m-0" href="#">Home |</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1 m-0" href="#">About Us |</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1 m-0" href="#">Contact Us |</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1 m-0" href="#">Terms & Conditions |</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1 m-0" href="#">Blog |</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-1 m-0" href="#">Help</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#"><img src="~/Content/img/facebook.png" width="40px" height="40px" /></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><img src="~/Content/img/linkedin.png" width="40px" height="40px" /></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><img src="~/Content/img/google.png" width="40px" height="40px" /></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><img src="~/Content/img/twitter.png" width="40px" height="40px" /></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <p class="text-center text-dark p-2 m-2">copyright&copy;2019 - All Rights Reserved</p>
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+</body>
+</html>
+

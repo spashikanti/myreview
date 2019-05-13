@@ -1,0 +1,143 @@
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    height: 30px;
+    width: 30px;
+    outline: black;
+    background-color: rgba(0, 0, 0, 0.3);
+    background-size: 100%, 100%;
+    border-radius: 50%;
+}
+
+.bg-secondary {
+    background-color: #84baea !important;
+    border: 1px solid #84baea;
+    border-radius: 10px;
+}
+
+.card {
+    margin-left: 30px;
+    margin-top: 5px;
+}
+
+.carousel {
+    width: 100%;
+}
+
+.slide-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .slide-box img {
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .slide-box img {
+        -ms-flex: 0 0 33.3333%;
+        flex: 0 0 33.3333%;
+        max-width: 33.3333%;
+    }
+}
+
+@media (min-width: 992px) {
+    .slide-box img {
+        -ms-flex: 0 0 25%;
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: .5rem;
+}
+
+
+.srch-panel {
+    background-color: #fafafa;
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    padding: 25px;
+    position: relative;
+    width: 100%;
+    max-width: 807px;
+}
+
+.search, .search input {
+    max-width: 100%;
+}
+
+.topnav .search-container {
+    float: right;
+}
+
+.topnav input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+}
+
+.topnav .search-container button {
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+    .topnav .search-container button:hover {
+        background: #ccc;
+    }
+
+.cont-new {
+    background: #fdfcfc;
+    border: 1px solid #fff;
+    padding: 45px;
+}
+
+.serch-input {
+    width: 100%;
+    font-size: 12px;
+    padding: 4px;
+}
+
+.serchnew-input {
+    width: 94%;
+    font-size: 12px;
+    padding: 4px;
+}
+
+.red {
+    color: red;
+}
+
+.blue {
+    color: #65930c !important;
+    font-size: 24px
+}
+
+span.fa.fa-star:hover {
+    color: #ffa500;
+}
+
+.fild {
+    width: 100%;
+}
+
+.mt-top {
+    margin-top: 10px;
+}
+
+.pad {
+    padding: 20px 0px;
+}

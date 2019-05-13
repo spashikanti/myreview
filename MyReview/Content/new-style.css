@@ -1,0 +1,294 @@
+.bg-green, .callout.callout-success, .alert-success, /*.label-success,*/ .modal-success .modal-body
+{
+	background-image: -webkit-linear-gradient(90deg,#45b649 0%,#dce35b 100%);
+	background-color: transparent !important;
+}
+
+.bg-yellow, .callout.callout-warning, .alert-warning, /*.label-warning,*/ .modal-warning .modal-body
+{
+	background-image: -webkit-linear-gradient(90deg,#11998e 0%,#38ef7d 100%);
+	background-color: transparent !important;
+}
+
+.bg-red, .callout.callout-danger, .alert-danger, .alert-error, /*.label-danger,*/ .modal-danger .modal-body
+{
+	background: linear-gradient(to bottom,#b96f77 0%,#ca0e0e 100%);
+	background-color: transparent !important;
+}
+
+.bg-aqua, .callout.callout-info, .alert-info, /*.label-info,*/ .modal-info .modal-body
+{
+	background-image: -webkit-linear-gradient(90deg,#ee0979 0%,#ff6a00 100%);
+	background-color: transparent !important;
+}
+
+.skin-blue .main-header .navbar, .skin-blue .main-sidebar
+{
+	background: rgba(0, 0, 0, 0.1) linear-gradient(to bottom, rgba(7, 82, 150, 0.6) 0%, #09C7E0 100%) repeat scroll 0 0;
+}
+
+.skin-blue .sidebar-menu>li.header {
+    color: #00bcd4;
+    background: #1a2226;
+}
+
+.skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a, .skin-blue .sidebar-menu>li.menu-open>a {
+    color: #fff;
+    background: #00BCD4;
+}
+
+.skin-blue .sidebar-menu>li.active>a{
+    border-left-color: #E91E63;
+}
+
+.user_card {
+	height: 400px;
+	width: 350px;
+	margin-top: auto;
+	margin-bottom: auto;
+	background: #f39c12;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	padding: 10px;
+	margin: 100px auto;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 5px;
+
+}
+
+.brand_logo_container {
+	position: absolute;
+	height: 30px;
+	width: 170px;
+	top: 0px;
+	border-radius: 50%;
+	background: #fff;
+	padding: 10px;
+	text-align: center;
+}
+
+.brand_logo {
+	height: 30px;
+	width: 150px;
+	border-radius: 50%;
+	border: 2px solid white;
+     margin-top:-9px;
+}
+
+.form_container {
+	margin-top: 100px;
+}
+
+.login_btn {
+	width: 100%;
+	background: #c0392b !important;
+	color: white !important;
+}
+
+.login_btn:focus {
+	box-shadow: none !important;
+	outline: 0px !important;
+}
+
+.login_container {
+	padding: 0 2rem;
+}
+
+.input-group-text {
+	background: #c0392b !important;
+	color: white !important;
+	border: 0 !important;
+	border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
+.input_user,
+.input_pass:focus {
+	box-shadow: none !important;
+	outline: 0px !important;
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+	background-color: #c0392b !important;
+}
+
+.skin-blue .sidebar-menu>li>.treeview-menu {
+	margin: 0 1px;
+	background: #0f5b82;
+}
+
+.skin-blue .sidebar-menu .treeview-menu>li>a {
+	color: #b1c6d0;
+}
+
+.justify-content-center {
+    -ms-flex-pack: center!important;
+    justify-content: center!important;
+}
+
+.d-flex {
+    display: -ms-flexbox!important;
+    display: flex!important;
+}
+.input-group-text {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: .375rem .75rem;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
+.input-group-addon {
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login_container {
+    padding: 0 56px;
+}
+
+#bg
+{
+	background-image: url(../img/body.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+#bg::after
+{
+	background-color: rgba(132, 127, 127, 0.5);
+}
+
+#bg::before
+{
+	background-color: rgba(132, 127, 127, 0.5);
+}
+.container1 {
+  	display: block;
+  	position: relative;
+  	padding-left: 25px;
+  	margin-bottom: 12px;
+  	margin-top: 10px;
+  	cursor: pointer;
+  	font-size: 15px;
+  	-webkit-user-select: none;
+  	-moz-user-select: none;
+  	-ms-user-select: none;
+  	user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container1 input {
+  	position: absolute;
+  	opacity: 0;
+  	cursor: pointer;
+  	height: 0;
+  	width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  	position: absolute;
+  	top: 0;
+  	left: 0;
+  	height: 18px;
+  	width: 18px;
+  	background-color: #fff;
+  	border-radius: 4px;
+}
+
+/* On mouse-over, add a grey background color */
+.container1:hover input ~ .checkmark {
+  	background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container1 input:checked ~ .checkmark {
+  	background-color: #c0392b;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  	content: "";
+  	position: absolute;
+  	display: none;
+}
+
+/* Show the checkmark when checked */
+.container1 input:checked ~ .checkmark:after {
+  	display: block;
+}
+
+/* Style the checkmark/indicator */
+.container1 .checkmark:after {
+  	left: 7px;
+  	top: 3px;
+  	width: 5px;
+  	height: 10px;
+  	border: solid white;
+  	border-width: 0 3px 3px 0;
+  	-webkit-transform: rotate(45deg);
+  	-ms-transform: rotate(45deg);
+  	transform: rotate(45deg);
+}
+
+.input-group .input-group-addon {
+    /* border-radius: 0; */
+    border-color: #c0392b;
+    background-color: #c0392b;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    color: #fff;
+}
+
+.input_pass, .input_user
+{
+	border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.mt-4
+{
+	margin-top: 15px;
+}
+
+.links
+{
+	font-size: 16px;
+}
+
+.links a
+{
+	color: #007bff;
+}
+
+.links a:hover
+{
+	color: #0056b3;
+    text-decoration: underline;
+}
+
+.ml-2 {
+    margin-left: .5rem !important;
+}

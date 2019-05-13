@@ -1,0 +1,91 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>My Review | Login</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.7 -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/Content/fontawesome.min.css" rel="stylesheet" />
+    <link href="~/Content/ionicons.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <!-- Ionicons -->
+
+    <link href="~/Content/jquery-jvectormap.css" rel="stylesheet" />
+    <!-- jvectormap -->
+
+
+
+    <link href="~/Content/_all-skins.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminLTE.min.css" rel="stylesheet" />
+
+    <!-- Google Font -->
+    
+
+    <link href="~/Content/font.min.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="~/Content/img/favicon.png" />
+
+
+    <link href="~/Content/new-style.css" rel="stylesheet" />
+</head>
+<body id="bg">
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="user_card">
+                <div class="d-flex justify-content-center">
+                    <div class="brand_logo_container">
+                        <img src="~/Content/img/logo.png" height="30px" class="brand_logo" alt="Logo">
+                      
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center form_container">
+                    <form method="post" action="~/Account/Validate">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input id="txtUserName" type="text" class="form-control input_user" name="txtUserName" placeholder="Email">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input id="txtpwd" type="password" class="form-control input_pass" name="txtpwd" placeholder="Password">
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <input type="submit" class="btn login_btn" value="login" />
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <input type="button"
+                                   class="btn login_btn"
+                                   value="New User"
+                                   onclick="location.href='@Url.Action("Index","NewReg" )'" />
+                        </div>
+                    </form>
+
+                </div>
+                @if (ViewBag.msg != null)
+                {
+
+                    <div class="d-flex justify-content-center mt-3 login_container">@ViewBag.msg</div>
+                }
+                <div class="mt-4">
+                    <div class="d-flex justify-content-center links">
+                        <a href="#" class="ml-2"></a>
+                    </div>
+                    <div class="d-flex justify-content-center links">
+                        <a href="#"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

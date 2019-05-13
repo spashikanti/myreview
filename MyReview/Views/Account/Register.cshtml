@@ -1,0 +1,53 @@
+﻿@model MyReview.Models.UserModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>Register</h2>
+@using (Html.BeginForm("Account", "Register", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+<feildset>
+    <legend>Registration From</legend>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.UserName)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.UserName)
+        @Html.ValidationMessageFor(model => model.UserName)
+    </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Email)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Email)
+        @Html.ValidationMessageFor(model => model.Email)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Password)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.Password)
+        @Html.ValidationMessageFor(model => model.Password)
+    </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.APassword)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.APassword)
+        @Html.ValidationMessageFor(model => model.APassword)
+    </div>
+</feildset>
+    
+        <input type="submit" value="Save" name="Command" />
+        <input type="submit" value="Search" name="Command" />
+
+        @if (ViewBag.msg != "")
+        {
+            <h3>@ViewBag.msg</h3>
+        }
+    
+}
+
