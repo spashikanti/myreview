@@ -160,32 +160,37 @@
                         <label><input type="radio" name="optradio">No</label>
                     </div>
 
-                </form>
 
-                <div class="radio">
-                    <label><span class="red">*</span><span class="serch-input"> Star Rating </span>  </label>  &nbsp;&nbsp;&nbsp;&nbsp;
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-                <div class="radio">
-                    <input type="text" name="firstname" class="fild serch-input " placeholder="Your review title will attract readers, so be creative.">
-                </div>
-                <div class="mt-top">
-                    <textarea rows="4" cols="100" name="comment" form="usrform" class="serch-input" placeholder="Write your review about the product.">
+
+                    <div class="radio">
+                        <label><span class="red">*</span><span class="serch-input"> Star Rating </span>  </label>  &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                    <div class="radio">
+                        <input type="text" name="reviewtitle" class="fild serch-input " placeholder="Your review title will attract readers, so be creative.">
+                    </div>
+                    <div class="mt-top">
+                        <textarea rows="4" cols="100" name="comment" form="usrform" class="serch-input" placeholder="Write your review about the product.">
 </textarea>
-                    <form action="/action_page.php">
-                        <input type="file" name="pic" accept="image/*" placeholder="Upload Photo">
+                        
+                            <input type="file" name="pic" accept="image/*" placeholder="Upload Photo">
 
-                    </form>
+                        
 
-                </div>
-                <div class="mt-top">
-                    <button type="button" class="btn btn-success">Submit Review</button>
+                    </div>
+                    <div class="mt-top">
+                        @*<button type="submit" class="btn btn-success" value="Submit Review" onclick="location.href='@Url.Action("Index","NewCategory" )'" />>Submit Review</button>*@
 
-                </div>
+                        <input type="button"
+                               class="btn btn-success"
+                               value="Submit Review"
+                               onclick="location.href='@Url.Action("WriteReview","Review" )'" />
+                    </div>
+                </form>
             </div>
             <div class="col-md-4 srch-panel">
                 <img src="~/Content/img/redmi7.jpg" width="300">

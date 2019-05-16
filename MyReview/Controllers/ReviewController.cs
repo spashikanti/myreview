@@ -39,7 +39,8 @@ namespace MyReview.Controllers
             //                select new { N.SubCategoryName });
             return Json(ObjList, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult WriteReview()
+       
+        public ActionResult WriteReview(string reviewtitle)
         {
             return View();
         }
@@ -86,6 +87,40 @@ namespace MyReview.Controllers
             }
 
             return items;
+        }
+
+        public void InsertReviewDetails(string CatID, string SubcatID, int productRate)
+        {
+            string connStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ToString();
+            string sql = "dbo.InsertReviewDetails";
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                using (SqlCommand cmd = new SqlCommand(sql))
+                {
+                    cmd.Connection = conn;
+                    try
+                    {
+                        cmd.Parameters.Add("@pCatID", System.Data.SqlDbType.NVarChar).Value= CatID;
+                        //cmd.Parameters["@pGuid"].Value = strguid;
+
+                        cmd.Parameters.Add("@pSubCatID", System.Data.SqlDbType.NVarChar).Value= SubcatID;
+                        //cmd.Parameters["@pEmail"].Value = umEmail;
+
+                        cmd.Parameters.Add("@pProductRate", System.Data.SqlDbType.Int).Value = productRate;
+
+                        cmd.Parameters.Add("@pProductRate", System.Data.SqlDbType.Int).Value = productRate;
+
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Connection = conn;
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+            }
         }
     }
 }
