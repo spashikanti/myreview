@@ -153,14 +153,12 @@
         <div class="row">
             <div class="col-md-8 srch-panel">
 
-                <form>
+                <form method="post" action="~/Review/AddReview" >
                     <div class="radio">
                         <label><span class="red">*</span> <span class="serch-input">Do you like this product?</span>  </label>  &nbsp;&nbsp;&nbsp;&nbsp;
                         <label><input type="radio" name="optradio" checked>Yes</label>
                         <label><input type="radio" name="optradio">No</label>
                     </div>
-
-
 
                     <div class="radio">
                         <label><span class="red">*</span><span class="serch-input"> Star Rating </span>  </label>  &nbsp;&nbsp;&nbsp;&nbsp;
@@ -174,10 +172,10 @@
                         <input type="text" name="reviewtitle" class="fild serch-input " placeholder="Your review title will attract readers, so be creative.">
                     </div>
                     <div class="mt-top">
-                        <textarea rows="4" cols="100" name="comment" form="usrform" class="serch-input" placeholder="Write your review about the product.">
+                        <textarea rows="4" cols="100" name="comment"  class="serch-input" placeholder="Write your review about the product.">
 </textarea>
                         
-                            <input type="file" name="pic" accept="image/*" placeholder="Upload Photo">
+                            <input type="file" name="filename" accept="image/*" placeholder="Upload Photo">
 
                         
 
@@ -185,10 +183,11 @@
                     <div class="mt-top">
                         @*<button type="submit" class="btn btn-success" value="Submit Review" onclick="location.href='@Url.Action("Index","NewCategory" )'" />>Submit Review</button>*@
 
-                        <input type="button"
+                        @*<input type="button"
                                class="btn btn-success"
                                value="Submit Review"
-                               onclick="location.href='@Url.Action("WriteReview","Review" )'" />
+                               onclick="location.href='@Url.Action("AddReview","Review" )'" />*@
+                        <input type="submit" class="btn btn-success" value="Submit Review" />
                     </div>
                 </form>
             </div>

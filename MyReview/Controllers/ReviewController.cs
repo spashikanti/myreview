@@ -40,9 +40,15 @@ namespace MyReview.Controllers
             return Json(ObjList, JsonRequestBehavior.AllowGet);
         }
        
-        public ActionResult WriteReview(string reviewtitle)
+        public ActionResult WriteReview()
         {
             return View();
+        }
+        [HttpPost]
+        public ActionResult AddReview(FormCollection f)
+        {
+            InsertReviewDetails("1", "1", 1, f["reviewtitle"].ToString(), f["comment"].ToString(), f["filename"].ToString(), "xxx@gmail.com");
+            return View("WriteReview");
         }
         public ActionResult AllReview()
         {
@@ -89,7 +95,7 @@ namespace MyReview.Controllers
             return items;
         }
 
-        public void InsertReviewDetails(string CatID, string SubcatID, int productRate)
+        public void InsertReviewDetails(string CatID, string SubcatID, int productRate, string reviewtitle, string reviewDes, string filename, string email )
         {
             string connStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ToString();
             string sql = "dbo.InsertReviewDetails";
@@ -108,11 +114,16 @@ namespace MyReview.Controllers
 
                         cmd.Parameters.Add("@pProductRate", System.Data.SqlDbType.Int).Value = productRate;
 
-                        cmd.Parameters.Add("@pProductRate", System.Data.SqlDbType.Int).Value = productRate;
+                        cmd.Parameters.Add("@pReviewTitle", System.Data.SqlDbType.NVarChar).Value = reviewtitle;
+
+                        cmd.Parameters.Add("@pReviewDes", System.Data.SqlDbType.NVarChar).Value = reviewDes;
+
+                        cmd.Parameters.Add("@pFileName", System.Data.SqlDbType.NVarChar).Value = filename; 
+
+                        cmd.Parameters.Add("@pEmail", System.Data.SqlDbType.NVarChar).Value = email;
 
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.Connection = conn;
-
                         conn.Open();
                         cmd.ExecuteNonQuery();
                     }
