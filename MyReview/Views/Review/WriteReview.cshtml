@@ -126,8 +126,16 @@
         <h4>Write a Review on <span id="lblProductName"></span></h4>
         <div class="row">
             <div class="col-md-8 srch-panel">
+                @using (Html.BeginForm("AddReview", "Review", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @*<div class="form-group">
+                        <div class="col-md-10">
+                            <input type="file" name="file" />
+                        </div>
+                    </div>*@
+                    @*<input type="submit" value="Registration" class="btn btn-default" />*@
 
-                <form method="post" action="~/Review/AddReview" enctype="multipart/form-data">
+                @*<form method="post" action="~/Review/AddReview" enctype="multipart/form-data">*@
                     <input type="hidden" name="hdCategoryId" id="hdCategoryId" />
                     <input type="hidden" name="hdSubCategoryId" id="hdSubCategoryId" />
                     <div class="radio">
@@ -148,17 +156,19 @@
                     </div>
                     <div class="mt-top">
                         <textarea rows="4" cols="100" name="comment" class="serch-input" placeholder="Write your review about the product."></textarea>
-                        <input type="file" name="filename" accept="image/*" placeholder="Upload Photo">
+                        @*<input type="file" name="filename" accept="image/*" placeholder="Upload Photo">*@
+                        <input type="file" name="file" />
                     </div>
                     <div class="mt-top">
                         @*<button type="submit" class="btn btn-success" value="Submit Review" onclick="location.href='@Url.Action("Index","NewCategory" )'" />>Submit Review</button>*@
                         @*<input type="button"
-                            class="btn btn-success"
-                            value="Submit Review"
-                            onclick="location.href='@Url.Action("AddReview","Review" )'" />*@
+                class="btn btn-success"
+                value="Submit Review"
+                onclick="location.href='@Url.Action("AddReview","Review" )'" />*@
                         <input type="submit" class="btn btn-success" value="Submit Review" />
                     </div>
-                </form>
+                @*</form>*@
+                }
             </div>
             <div class="col-md-4 srch-panel">
                 <img name="imgProduct" id="imgProduct" width="300">

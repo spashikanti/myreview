@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -49,8 +50,13 @@ namespace MyReview.Controllers
         public ActionResult AddReview(FormCollection f, HttpPostedFileBase file)
         {
             HttpStatusCode hp = InsertReviewDetails(f["hdCategoryId"].ToString(), f["hdSubCategoryId"].ToString(), 1, f["reviewtitle"].ToString(), f["comment"].ToString()
-                , Convert.ToBoolean(f["optradio"]), f["filename"]);
-            
+                , Convert.ToBoolean(f["optradio"]), file);
+
+            if (hp.ToString() == "Created")
+            {
+                //success page
+            }
+            //else error page
                 return View("WriteReview");
         }
         public ActionResult AllReview()
@@ -98,7 +104,7 @@ namespace MyReview.Controllers
             return items;
         }
 
-        public HttpStatusCode InsertReviewDetails(string catID, string subcatID, int productRate, string reviewtitle, string reviewDes, bool isLikeProduct, string filename)
+        public HttpStatusCode InsertReviewDetails(string catID, string subcatID, int productRate, string reviewtitle, string reviewDes, bool isLikeProduct, HttpPostedFileBase file)
         {
             if (Session["LoggedInUser"] != null)
             {
@@ -112,6 +118,7 @@ namespace MyReview.Controllers
                         cmd.Connection = conn;
                         try
                         {
+                            string fileName = string.Empty;
                             cmd.Parameters.Add("@pCatID", System.Data.SqlDbType.NVarChar).Value = catID;
                             cmd.Parameters.Add("@pSubCatID", System.Data.SqlDbType.NVarChar).Value = subcatID;
                             cmd.Parameters.Add("@pUserID", System.Data.SqlDbType.NVarChar).Value = um.UserId;
@@ -119,15 +126,15 @@ namespace MyReview.Controllers
                             cmd.Parameters.Add("@pReviewTitle", System.Data.SqlDbType.NVarChar).Value = reviewtitle;
                             cmd.Parameters.Add("@pReviewDes", System.Data.SqlDbType.NVarChar).Value = reviewDes;
                             cmd.Parameters.Add("@pIsLikeProduct", System.Data.SqlDbType.Bit).Value = isLikeProduct;
-                            //if (file != null && file.ContentLength > 0)
-                            //{
-                            //    Guid strGuid = Guid.NewGuid();
-                            //    fileName = strGuid.ToString();
-                            //    string imgPath = Path.Combine(Server.MapPath("~/ReviewUploads/" + fileName + Path.GetExtension(file.FileName)));
-                            //    file.SaveAs(imgPath);
-                            //    sqlcomm.Parameters.AddWithValue("@Photo", fileName);
-                            //}
-                            cmd.Parameters.Add("@pFileName", System.Data.SqlDbType.NVarChar).Value = filename;
+                            if (file != null && file.ContentLength > 0)
+                            {
+                                Guid strGuid = Guid.NewGuid();
+                                fileName = strGuid.ToString();
+                                string imgPath = Path.Combine(Server.MapPath("~/ReviewUploads/" + fileName + Path.GetExtension(file.FileName)));
+                                file.SaveAs(imgPath);
+                                cmd.Parameters.Add("@pFileName", System.Data.SqlDbType.NVarChar).Value = fileName + Path.GetExtension(file.FileName);
+                            }
+                            
                             cmd.CommandType = System.Data.CommandType.StoredProcedure;
                             conn.Open();
                             cmd.ExecuteNonQuery();
