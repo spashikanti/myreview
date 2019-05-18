@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -11,7 +10,7 @@
     <title>_UserLayout</title>
 
     <!-- Bootstrap CSS -->
-   
+
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <title>My Review!</title>
     <link href="~/Content/style.css" rel="stylesheet" />
@@ -26,13 +25,38 @@
             <span class="text-primary">My Review</span>
         </a>
         <!-- <button class="navbar-toggler .d-lg-none .d-xl-block" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button> -->
+      <span class="navbar-toggler-icon"></span>
+    </button> -->
         <div class="" id="navbarSupportedContent">
             <nav class="nav">
-                <a class="nav-link active " href="#">Login</a>
+                sunil
+                @*<a class="nav-link active " href="#">Login</a>
                 <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-danger">Sign Up</button></a>
-                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success">Write a Review</button></a>
+                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success">Write a Review</button></a>*@
+                @*</nav>
+                </div>*@
+
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                @Html.ActionLink("Hello " + User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                            </li>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                        </ul>
+                    }
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    </ul>
+                }
             </nav>
         </div>
     </nav>

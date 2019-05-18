@@ -31,57 +31,6 @@
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script type="text/javascript">
-        //$(document).ready(function () {
-
-        //    $.widget("custom.catcomplete", $.ui.autocomplete, {
-        //        _renderMenu: function (ul, items) {
-        //            var self = this,
-        //                currentCategory = "";
-        //            //$.each(items, function (index, item) {
-        //            //    if (item.SubCategoryName != currentCategory) {
-        //            //        ul.append("<li class='ui-autocomplete-category'>" + item.SubCategoryName + "</li>");
-        //            //        currentCategory = item.SubCategoryName;
-        //            //    }
-        //            //    self._renderItem(ul, item);
-        //            //});
-        //            for (var i = 0; i < items.length; i++) {
-        //                console.log(items[i]);
-        //                var item = items[i].label;
-        //                if (item.SubCategoryName != currentCategory) {
-        //                    ul.append("<li data-subcategoryid='" + item.SubCategoryId +"' class='ui-autocomplete-category'>" + item.SubCategoryName + ' - ' + item.Description + "</li>");
-        //                    currentCategory = item.SubCategoryName;
-        //                }
-        //                self._renderItem(ul, item);
-        //            }                    
-        //        }
-        //    });
-
-        //    $("#search").catcomplete({
-        //        delay: 0,
-        //        source: function (request, response) {
-        //            $.ajax({
-        //                url: "/Review/Index",
-        //                type: "POST",
-        //                dataType: "json",
-        //                data: { keyword: request.term },
-        //                success: function (data) {
-        //                    //console.log(data);
-        //                    response($.map(data, function (item) {
-        //                        return { label: item };
-        //                    }));
-        //                }
-        //            });
-        //        },
-        //        select: function (event, ui) {
-        //            console.log("UI: ", ui);
-        //            console.log("event: ", event);
-        //            //console.log("this.selectedItem: ", this.selectedItem);
-        //            //alert('you have selected: ' + ui.item.label + ', ' + ui.item.id);
-        //            //$("#search").val(ui.item.label);
-        //        }
-        //    })
-        //});
-
         $(document).ready(function () {
             $('#search').autocomplete({
                 source: function (request, response) {
@@ -91,7 +40,6 @@
                         dataType: "json",
                         data: { keyword: request.term },
                         success: function (data) {
-                            //console.log(data);
                             response($.map(data, function (item) {
                                 return { label: item };
                             }));
@@ -99,8 +47,12 @@
                     });
                 },
                 select: function (event, ui) {
-                    //console.log(ui);
-                    alert("SubCategoryId, CategoryId,ImageName: " + ui.item.label.SubCategoryId + ", " + ui.item.label.CategoryId + ", " + ui.item.label.ImageName);
+                    //alert("SubCategoryId, CategoryId,ImageName: " + ui.item.label.SubCategoryId + ", " + ui.item.label.CategoryId + ", " + ui.item.label.ImageName);
+                    var imgSrc = "../Content/img/" + ui.item.label.ImageName;
+                    $("#imgProduct").attr('src', imgSrc);
+                    $("#hdCategoryId").val(ui.item.label.CategoryId);
+                    $("#hdSubCategoryId").val(ui.item.label.SubCategoryId);
+                    $("#lblProductName").html(ui.item.label.SubCategoryName);
                     //$("#item_description").val(ui.item.description);
                     $('#search').val(ui.item.label.SubCategoryName + " - " + ui.item.label.Description);
                     return false;
@@ -111,7 +63,7 @@
                     .append("<a>" + item.label.SubCategoryName + " - " + item.label.Description + "</a>")
                     .appendTo(ul);
             };
-        }); 
+        });
     </script>
 </head>
 <body>
@@ -126,10 +78,33 @@
         </button> -->
         <div class="" id="navbarSupportedContent">
             <nav class="nav">
-                <a class="nav-link active " href="#">Login</a>
-                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-danger">Sign Up</button></a>
-                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("Index","Review" )'">My Review</button></a>
-                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("AllReview","Review" )'">All Review</button></a>
+                @*<a class="nav-link active " href="#">Login</a>
+        <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-danger">Sign Up</button></a>
+        <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("Index","Review" )'">My Review</button></a>
+        <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("AllReview","Review" )'">All Review</button></a>*@
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("Index","Review" )'">My Review</button></a>
+                        <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("AllReview","Review" )'">All Review</button></a>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                @Html.ActionLink("Hello " + User.Identity.Name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                            </li>
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                        </ul>
+                    }
+                }
+                else
+                {
+                    @*<ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    </ul>*@
+                }
             </nav>
         </div>
     </nav>
@@ -147,19 +122,19 @@
             </div>
         </div>
     </div>
-    <br><br>
     <div class="container cont-new">
-        <h4>Write a Review on MI NOTE 7</h4>
+        <h4>Write a Review on <span id="lblProductName"></span></h4>
         <div class="row">
             <div class="col-md-8 srch-panel">
 
-                <form method="post" action="~/Review/AddReview" >
+                <form method="post" action="~/Review/AddReview" enctype="multipart/form-data">
+                    <input type="hidden" name="hdCategoryId" id="hdCategoryId" />
+                    <input type="hidden" name="hdSubCategoryId" id="hdSubCategoryId" />
                     <div class="radio">
                         <label><span class="red">*</span> <span class="serch-input">Do you like this product?</span>  </label>  &nbsp;&nbsp;&nbsp;&nbsp;
-                        <label><input type="radio" name="optradio" checked>Yes</label>
-                        <label><input type="radio" name="optradio">No</label>
+                        <label><input type="radio" name="optradio" value="True" checked>Yes</label>
+                        <label><input type="radio" name="optradio" value="False">No</label>
                     </div>
-
                     <div class="radio">
                         <label><span class="red">*</span><span class="serch-input"> Star Rating </span>  </label>  &nbsp;&nbsp;&nbsp;&nbsp;
                         <span class="fa fa-star"></span>
@@ -172,41 +147,24 @@
                         <input type="text" name="reviewtitle" class="fild serch-input " placeholder="Your review title will attract readers, so be creative.">
                     </div>
                     <div class="mt-top">
-                        <textarea rows="4" cols="100" name="comment"  class="serch-input" placeholder="Write your review about the product.">
-</textarea>
-                        
-                            <input type="file" name="filename" accept="image/*" placeholder="Upload Photo">
-
-                        
-
+                        <textarea rows="4" cols="100" name="comment" class="serch-input" placeholder="Write your review about the product."></textarea>
+                        <input type="file" name="filename" accept="image/*" placeholder="Upload Photo">
                     </div>
                     <div class="mt-top">
                         @*<button type="submit" class="btn btn-success" value="Submit Review" onclick="location.href='@Url.Action("Index","NewCategory" )'" />>Submit Review</button>*@
-
                         @*<input type="button"
-                               class="btn btn-success"
-                               value="Submit Review"
-                               onclick="location.href='@Url.Action("AddReview","Review" )'" />*@
+                            class="btn btn-success"
+                            value="Submit Review"
+                            onclick="location.href='@Url.Action("AddReview","Review" )'" />*@
                         <input type="submit" class="btn btn-success" value="Submit Review" />
                     </div>
                 </form>
             </div>
             <div class="col-md-4 srch-panel">
-                <img src="~/Content/img/redmi7.jpg" width="300">
-
-
+                <img name="imgProduct" id="imgProduct" width="300">
             </div>
         </div>
-
-
-
-
-
-
     </div>
-
-
-
     <footer class="" style="background-color: #e3f2fd;">
         <div class="container">
             <div class="row">
@@ -254,7 +212,5 @@
     </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-
 </body>
 </html>
-

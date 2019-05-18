@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -45,10 +46,12 @@ namespace MyReview.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddReview(FormCollection f)
+        public ActionResult AddReview(FormCollection f, HttpPostedFileBase file)
         {
-            InsertReviewDetails("1", "1", 1, f["reviewtitle"].ToString(), f["comment"].ToString(), f["filename"].ToString(), "xxx@gmail.com");
-            return View("WriteReview");
+            HttpStatusCode hp = InsertReviewDetails(f["hdCategoryId"].ToString(), f["hdSubCategoryId"].ToString(), 1, f["reviewtitle"].ToString(), f["comment"].ToString()
+                , Convert.ToBoolean(f["optradio"]), f["filename"]);
+            
+                return View("WriteReview");
         }
         public ActionResult AllReview()
         {
@@ -95,43 +98,52 @@ namespace MyReview.Controllers
             return items;
         }
 
-        public void InsertReviewDetails(string CatID, string SubcatID, int productRate, string reviewtitle, string reviewDes, string filename, string email )
+        public HttpStatusCode InsertReviewDetails(string catID, string subcatID, int productRate, string reviewtitle, string reviewDes, bool isLikeProduct, string filename)
         {
-            string connStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ToString();
-            string sql = "dbo.InsertReviewDetails";
-            using (SqlConnection conn = new SqlConnection(connStr))
+            if (Session["LoggedInUser"] != null)
             {
-                using (SqlCommand cmd = new SqlCommand(sql))
+                UserModel um = (UserModel)Session["LoggedInUser"];
+                string connStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ToString();
+                string sql = "dbo.InsertReviewDetails";
+                using (SqlConnection conn = new SqlConnection(connStr))
                 {
-                    cmd.Connection = conn;
-                    try
+                    using (SqlCommand cmd = new SqlCommand(sql))
                     {
-                        cmd.Parameters.Add("@pCatID", System.Data.SqlDbType.NVarChar).Value= CatID;
-                        //cmd.Parameters["@pGuid"].Value = strguid;
-
-                        cmd.Parameters.Add("@pSubCatID", System.Data.SqlDbType.NVarChar).Value= SubcatID;
-                        //cmd.Parameters["@pEmail"].Value = umEmail;
-
-                        cmd.Parameters.Add("@pProductRate", System.Data.SqlDbType.Int).Value = productRate;
-
-                        cmd.Parameters.Add("@pReviewTitle", System.Data.SqlDbType.NVarChar).Value = reviewtitle;
-
-                        cmd.Parameters.Add("@pReviewDes", System.Data.SqlDbType.NVarChar).Value = reviewDes;
-
-                        cmd.Parameters.Add("@pFileName", System.Data.SqlDbType.NVarChar).Value = filename; 
-
-                        cmd.Parameters.Add("@pEmail", System.Data.SqlDbType.NVarChar).Value = email;
-
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.Connection = conn;
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
+                        try
+                        {
+                            cmd.Parameters.Add("@pCatID", System.Data.SqlDbType.NVarChar).Value = catID;
+                            cmd.Parameters.Add("@pSubCatID", System.Data.SqlDbType.NVarChar).Value = subcatID;
+                            cmd.Parameters.Add("@pUserID", System.Data.SqlDbType.NVarChar).Value = um.UserId;
+                            cmd.Parameters.Add("@pProductRate", System.Data.SqlDbType.Int).Value = productRate;
+                            cmd.Parameters.Add("@pReviewTitle", System.Data.SqlDbType.NVarChar).Value = reviewtitle;
+                            cmd.Parameters.Add("@pReviewDes", System.Data.SqlDbType.NVarChar).Value = reviewDes;
+                            cmd.Parameters.Add("@pIsLikeProduct", System.Data.SqlDbType.Bit).Value = isLikeProduct;
+                            //if (file != null && file.ContentLength > 0)
+                            //{
+                            //    Guid strGuid = Guid.NewGuid();
+                            //    fileName = strGuid.ToString();
+                            //    string imgPath = Path.Combine(Server.MapPath("~/ReviewUploads/" + fileName + Path.GetExtension(file.FileName)));
+                            //    file.SaveAs(imgPath);
+                            //    sqlcomm.Parameters.AddWithValue("@Photo", fileName);
+                            //}
+                            cmd.Parameters.Add("@pFileName", System.Data.SqlDbType.NVarChar).Value = filename;
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            return HttpStatusCode.BadRequest;
+                        }
                     }
                 }
             }
+            else
+            {
+                return HttpStatusCode.Unauthorized;
+            }
+            return HttpStatusCode.Created;
         }
     }
 }

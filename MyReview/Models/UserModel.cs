@@ -38,5 +38,8 @@ namespace MyReview.Models
         [Display(Name = "Profile Image :")]
         public string Photo { get; set; }
 
+        public int UserId { get; set; }
+        public bool IsEmailValidated { get; set; }
+        public int UserType { get; set; }
     }
 }

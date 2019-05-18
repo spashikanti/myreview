@@ -31,19 +31,38 @@ namespace MyReview.Controllers
                     DataSet userDetails = new DataSet();
                     try
                     {
-                        
+                        UserModel loggedInUser = null;
                         adapter.Fill(userDetails, "UserMaster");
 
                         if(userDetails.Tables["UserMaster"].Rows.Count > 0)
                         {
                             System.Web.Security.FormsAuthentication.SetAuthCookie(f["txtUserName"].ToString(), false);
+                            loggedInUser = new UserModel();
+
                             foreach (DataRow pRow in userDetails.Tables["UserMaster"].Rows)
                             {
-                                if (Convert.ToBoolean(pRow["UserType"]))
-                                    return RedirectToAction("Index", "Administrator"); 
-                                else
-                                    return RedirectToAction("Index", "Review");
+                                loggedInUser.UserId = Convert.ToInt16(pRow["UserId"]);
+                                loggedInUser.UserName = Convert.ToString(pRow["UserName"]);
+                                loggedInUser.UserType = Convert.ToInt16(pRow["UserType"]);
+                                if (pRow["Photo"] != null && !string.IsNullOrEmpty(pRow["Photo"].ToString()))
+                                {
+                                    string imgPath = Path.Combine(Server.MapPath("~/UserProfilePhoto/" + pRow["Photo"].ToString()));
+                                    loggedInUser.Photo = imgPath;
+                                }
+
+                                loggedInUser.PhoneNumber = Convert.ToString(pRow["PhoneNumber"]);
+                                loggedInUser.IsEmailValidated = Convert.ToBoolean(pRow["IsEmailValidated"]);
+                                loggedInUser.Email = Convert.ToString(pRow["Email"]);
+
+                                Session["LoggedInUser"] = loggedInUser;
+
+                                //if (Convert.ToBoolean(pRow["UserType"]))
+                                //    return RedirectToAction("Index", "Administrator"); 
+                                //else
+                                //    return RedirectToAction("Index", "Review");
                             }
+                            if (Convert.ToBoolean(loggedInUser.UserType))
+                                return RedirectToAction("Index", "Administrator");
                             return RedirectToAction("Index", "Review");
                         }
                         else

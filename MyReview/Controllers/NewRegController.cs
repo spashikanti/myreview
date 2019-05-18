@@ -43,14 +43,14 @@ namespace MyReview.Controllers
                     {
                         Guid strGuid = Guid.NewGuid();
                         fileName = strGuid.ToString();
-                        string imgPath = Path.Combine(Server.MapPath("~/UserProfilePhoto/" + fileName));
+                        string imgPath = Path.Combine(Server.MapPath("~/UserProfilePhoto/" + fileName + Path.GetExtension(file.FileName)));
                         file.SaveAs(imgPath);
                         sqlcomm.Parameters.AddWithValue("@Photo", fileName);
                     }
-                    else
-                    {
-                        sqlcomm.Parameters.AddWithValue("@Photo", fileName);
-                    }
+                    //else
+                    //{
+                    //    sqlcomm.Parameters.AddWithValue("@Photo", fileName);
+                    //}
                     sqlcomm.Parameters.AddWithValue("@CreateDate", DateTime.Now);
                     sqlconn.Open();
 
