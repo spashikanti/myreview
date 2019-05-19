@@ -49,7 +49,7 @@ namespace MyReview.Controllers
         [HttpPost]
         public ActionResult AddReview(FormCollection f, HttpPostedFileBase file)
         {
-            HttpStatusCode hp = InsertReviewDetails(f["hdCategoryId"].ToString(), f["hdSubCategoryId"].ToString(), 1, f["reviewtitle"].ToString(), f["comment"].ToString()
+            HttpStatusCode hp = InsertReviewDetails(f["hdCategoryId"].ToString(), f["hdSubCategoryId"].ToString(), Convert.ToInt16(f["hdStarRating"]), f["reviewtitle"].ToString(), f["comment"].ToString()
                 , Convert.ToBoolean(f["optradio"]), file);
 
             if (hp.ToString() == "Created")

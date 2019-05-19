@@ -28,8 +28,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    @*star ratings-start*@
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="~/Content/star-rating.css" media="all" rel="stylesheet" type="text/css"  />
+    @*star ratings-end*@
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    @*star ratings-start*@
+    <script src="~/Scripts/star-rating.js"></script>
+    @*star ratings-end*@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#search').autocomplete({
@@ -62,7 +70,12 @@
                     .data("ui-autocomplete-item", item)
                     .append("<a>" + item.label.SubCategoryName + " - " + item.label.Description + "</a>")
                     .appendTo(ul);
-            };
+                };
+
+            $('#input-21e').on(
+                'change', function () {
+                    $("#hdStarRating").val($(this).val());
+                }); 
         });
     </script>
 </head>
@@ -129,27 +142,32 @@
                 @using (Html.BeginForm("AddReview", "Review", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     @*<div class="form-group">
-                        <div class="col-md-10">
-                            <input type="file" name="file" />
-                        </div>
-                    </div>*@
+                <div class="col-md-10">
+                    <input type="file" name="file" />
+                </div>
+            </div>*@
                     @*<input type="submit" value="Registration" class="btn btn-default" />*@
 
-                @*<form method="post" action="~/Review/AddReview" enctype="multipart/form-data">*@
+                    @*<form method="post" action="~/Review/AddReview" enctype="multipart/form-data">*@
                     <input type="hidden" name="hdCategoryId" id="hdCategoryId" />
                     <input type="hidden" name="hdSubCategoryId" id="hdSubCategoryId" />
+                    <input type="hidden" name="hdStarRating" id="hdStarRating" />
                     <div class="radio">
                         <label><span class="red">*</span> <span class="serch-input">Do you like this product?</span>  </label>  &nbsp;&nbsp;&nbsp;&nbsp;
                         <label><input type="radio" name="optradio" value="True" checked>Yes</label>
                         <label><input type="radio" name="optradio" value="False">No</label>
                     </div>
                     <div class="radio">
-                        <label><span class="red">*</span><span class="serch-input"> Star Rating </span>  </label>  &nbsp;&nbsp;&nbsp;&nbsp;
+                        <label><span class="red">*</span><span class="serch-input"> Star Rating </span>  </label>
+                        <input id="input-21e" value="0" type="text" class="rating" data-min=0 data-max=5 data-step=0.5 data-size="xs"
+                               title="">
+
+                        @*&nbsp;&nbsp;&nbsp;&nbsp;
                         <span class="fa fa-star"></span>
                         <span class="fa fa-star"></span>
                         <span class="fa fa-star"></span>
                         <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>*@
                     </div>
                     <div class="radio">
                         <input type="text" name="reviewtitle" class="fild serch-input " placeholder="Your review title will attract readers, so be creative.">
@@ -167,7 +185,7 @@
                 onclick="location.href='@Url.Action("AddReview","Review" )'" />*@
                         <input type="submit" class="btn btn-success" value="Submit Review" />
                     </div>
-                @*</form>*@
+                    @*</form>*@
                 }
             </div>
             <div class="col-md-4 srch-panel">

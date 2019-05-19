@@ -194,6 +194,8 @@
     <Content Include="Content\ionicons.min.css" />
     <Content Include="Content\jquery-jvectormap.css" />
     <Content Include="Content\new-style.css" />
+    <Content Include="Content\star-rating.css" />
+    <Content Include="Content\star-rating.min.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\_all-skins.min.css" />
     <Content Include="favicon.ico" />
@@ -238,6 +240,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\star-rating.js" />
+    <Content Include="Scripts\star-rating.min.js" />
     <Content Include="Scripts\valid.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
