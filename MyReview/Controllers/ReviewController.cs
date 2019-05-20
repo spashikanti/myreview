@@ -49,7 +49,7 @@ namespace MyReview.Controllers
         [HttpPost]
         public ActionResult AddReview(FormCollection f, HttpPostedFileBase file)
         {
-            HttpStatusCode hp = InsertReviewDetails(f["hdCategoryId"].ToString(), f["hdSubCategoryId"].ToString(), Convert.ToInt16(f["hdStarRating"]), f["reviewtitle"].ToString(), f["comment"].ToString()
+            HttpStatusCode hp = InsertReviewDetails(f["hdCategoryId"].ToString(), f["hdSubCategoryId"].ToString(), Convert.ToDecimal(f["hdStarRating"].ToString()), f["reviewtitle"].ToString(), f["comment"].ToString()
                 , Convert.ToBoolean(f["optradio"]), file);
 
             if (hp.ToString() == "Created")
@@ -104,7 +104,7 @@ namespace MyReview.Controllers
             return items;
         }
 
-        public HttpStatusCode InsertReviewDetails(string catID, string subcatID, int productRate, string reviewtitle, string reviewDes, bool isLikeProduct, HttpPostedFileBase file)
+        public HttpStatusCode InsertReviewDetails(string catID, string subcatID, decimal productRate, string reviewtitle, string reviewDes, bool isLikeProduct, HttpPostedFileBase file)
         {
             if (Session["LoggedInUser"] != null)
             {
@@ -122,7 +122,7 @@ namespace MyReview.Controllers
                             cmd.Parameters.Add("@pCatID", System.Data.SqlDbType.NVarChar).Value = catID;
                             cmd.Parameters.Add("@pSubCatID", System.Data.SqlDbType.NVarChar).Value = subcatID;
                             cmd.Parameters.Add("@pUserID", System.Data.SqlDbType.NVarChar).Value = um.UserId;
-                            cmd.Parameters.Add("@pProductRate", System.Data.SqlDbType.Int).Value = productRate;
+                            cmd.Parameters.Add("@pProductRate", System.Data.SqlDbType.Decimal).Value = productRate;
                             cmd.Parameters.Add("@pReviewTitle", System.Data.SqlDbType.NVarChar).Value = reviewtitle;
                             cmd.Parameters.Add("@pReviewDes", System.Data.SqlDbType.NVarChar).Value = reviewDes;
                             cmd.Parameters.Add("@pIsLikeProduct", System.Data.SqlDbType.Bit).Value = isLikeProduct;

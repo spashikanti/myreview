@@ -243,6 +243,7 @@
     <Content Include="Scripts\star-rating.js" />
     <Content Include="Scripts\star-rating.min.js" />
     <Content Include="Scripts\valid.js" />
+    <Content Include="sps\sps.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
