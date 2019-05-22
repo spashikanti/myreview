@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@model IEnumerable<MyReview.Models.ReviewsModel>
+<!doctype html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -39,7 +40,7 @@
             <nav class="nav">
                 <a class="nav-link active " href="#">Login</a>
                 <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-danger">Sign Up</button></a>
-                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success"  onclick="location.href='@Url.Action("WriteReview","Review" )'">Write a Review</button></a>
+                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("WriteReview", "Review")'">Write a Review</button></a>
             </nav>
         </div>
     </nav>
@@ -68,14 +69,34 @@
     <div class="container">
         <h3 class="title text-primary text-center m-3 pt-2">Recent Reviews</h3>
         <div class="row">
-
+            @{
+                    if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            var imgSrc = "~/Content/img/" + item.ImageName;
+                            <div class="card" style="width: 15rem;">
+                                <img src='@imgSrc' class="card-img-top" height="200px" width="200px" alt="...">
+                                <p class="text-dark mt-0 mb-0 pl-1">@item.SubCategoryName</p>
+                                <p class="text-secondary mt-0 mb-0 pl-1">@item.PublishedSince</p>
+                                <hr>
+                                <div class="card-body mt-0 pt-0">
+                                    <p class="card-text">&starf; &starf; &starf; &starf; &star;</p>
+                                    <p class="card-text">@item.ReviewTitle</p>
+                                    <p class="card-text text-success">@item.ReviewDescription</p>
+                                    <a href='@Url.Action("ReadMore", "Review")' class="">Read More ></a>
+                                </div>
+                            </div>
+                    }
+                }
+            }
             <div class="card" style="width: 15rem;">
                 <img src="~/Content/img/nokia1.png" class="card-img-top" height="200px" width="200px" alt="...">
                 <p class="text-dark mt-0 mb-0 pl-1">Nokia 8.14GB</p>
                 <p class="text-secondary mt-0 mb-0 pl-1">0 Hours 4 min ago</p>
                 <hr>
                 <div class="card-body mt-0 pt-0">
-                    <p class="card-text">&starf; &starf; &starf; &starf; &star;</p>
+                    <p class="card-text">&starf; &starf; &starf; &starf; &starh;</p>
                     <p class="card-text">One Review Recieved</p>
                     <p class="card-text text-success">Amazing</p>
                     <a href='@Url.Action("ReadMore", "Review")' class="">Read More ></a>
@@ -406,7 +427,7 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
-    
+
 
 </body>
 </html>
