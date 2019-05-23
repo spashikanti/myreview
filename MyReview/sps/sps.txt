@@ -144,6 +144,93 @@ END
 GO
 
 
+USE [MyReview]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetTop4ProductReviews]    Script Date: 5/23/2019 9:59:58 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[GetTop4ProductReviews]
+	--@prodname    nvarchar
+AS
+BEGIN
+	SET NOCOUNT ON;
+   
+	SELECT  TOP 4 SC.[SubCategoryId] 
+      ,SC.[SubCategoryName]
+      ,SC.[Description]
+      ,SC.[ImageName]
+      ,SC.[CategoryId]
+	  ,RD.[ProductRate]
+	  ,RD.ReviewDescription
+	  ,RD.ReviewTitle
+	  ,RD.ReviewId,
+	  RD.[CreatedDate]
+	  ,dbo.[ufngethrmin]('2019-05-20 22:00:00.000')AS PublishedSince
+	  ,GETDATE() AS todaysDate
+	  
+      
+  FROM [dbo].[SubCategory] SC
+  Inner JOIN Category C  ON SC.CategoryId = C.CategoryId 
+  Inner JOIN ReviewDetails RD ON RD.SubCategoryId =SC.SubCategoryId
+
+
+  --,CONVERT(varchar(5),DATEADD(minute,DATEDIFF(minute,RD.[CreatedDate],GETDATE()),0), 114) As PublishedSince
+  
+END
+
+GO
+************************************************************************
+
+USE [MyReview]
+GO
+
+/****** Object:  UserDefinedFunction [dbo].[ufngethrmin]    Script Date: 5/23/2019 10:01:13 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE FUNCTION [dbo].[ufngethrmin](@CreateDate datetime)  
+RETURNS nvarchar(50)   
+AS   
+-- Returns the stock level for the product.  '2019-05-20 22:00:00.000'
+BEGIN  
+   	declare @dt1 datetime, @dt2 datetime, @Seconds int,@hrmin nvarchar(50)
+select @dt1=@CreateDate, @dt2 =getdate()
+set @Seconds=datediff(second, @dt1, @dt2)
+
+
+    declare @Hour nvarchar(50)
+    declare @Min nvarchar(50)
+    declare @MinTemp int        
+    if @Seconds >0 
+    begin
+    set @Hour=cast((@Seconds / 3600) as nvarchar(20)) +' Hours '
+    set @MinTemp= (@Seconds % 3600) / 60
+    set @Min=cast(@MinTemp as nvarchar(20))
+    if  @MinTemp<10 
+        SET @hrmin =@Hour+'0'+@Min +' min ago'
+    else
+        SET @hrmin = @Hour+@Min +' min ago'
+    end
+    else 
+    SET @hrmin = '00 Hours 00 min'
+
+	RETURN @hrmin 
+END; 
+GO
+
+
+
+
+
 
 
 

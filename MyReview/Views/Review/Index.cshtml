@@ -74,7 +74,7 @@
                     {
                         foreach (var item in Model)
                         {
-                            var imgSrc = "~/Content/img/" + item.ImageName;
+                            var imgSrc = "/Content/img/" + item.ImageName;
                             <div class="card" style="width: 15rem;">
                                 <img src='@imgSrc' class="card-img-top" height="200px" width="200px" alt="...">
                                 <p class="text-dark mt-0 mb-0 pl-1">@item.SubCategoryName</p>
@@ -90,59 +90,7 @@
                     }
                 }
             }
-            <div class="card" style="width: 15rem;">
-                <img src="~/Content/img/nokia1.png" class="card-img-top" height="200px" width="200px" alt="...">
-                <p class="text-dark mt-0 mb-0 pl-1">Nokia 8.14GB</p>
-                <p class="text-secondary mt-0 mb-0 pl-1">0 Hours 4 min ago</p>
-                <hr>
-                <div class="card-body mt-0 pt-0">
-                    <p class="card-text">&starf; &starf; &starf; &starf; &starh;</p>
-                    <p class="card-text">One Review Recieved</p>
-                    <p class="card-text text-success">Amazing</p>
-                    <a href='@Url.Action("ReadMore", "Review")' class="">Read More ></a>
-                </div>
-            </div>
-
-            <div class="card" style="width: 15rem;">
-                <img src="~/Content/img/nokia2.png" class="card-img-top" height="200px" width="200px" alt="...">
-                <p class="text-dark mt-0 mb-0 pl-1">Nokia 8.14GB</p>
-                <p class="text-secondary mt-0 mb-0 pl-1">0 Hours 4 min ago</p>
-                <hr>
-                <div class="card-body mt-0 pt-0">
-                    <p class="card-text">&starf; &starf; &starf; &starf; &star;</p>
-                    <p class="card-text">One Review Recieved</p>
-                    <p class="card-text text-success">Amazing</p>
-                    <a href='@Url.Action("ReadMore", "Review")' class="">Read More ></a>
-                </div>
-            </div>
-
-            <div class="card" style="width: 15rem;">
-                <img src="~/Content/img/nokia3.png" class="card-img-top" height="200px" width="200px" alt="...">
-                <p class="text-dark mt-0 mb-0 pl-1">Nokia 8.14GB</p>
-                <p class="text-secondary mt-0 mb-0 pl-1">0 Hours 4 min ago</p>
-                <hr>
-                <div class="card-body mt-0 pt-0">
-                    <p class="card-text">&starf; &starf; &starf; &starf; &star;</p>
-                    <p class="card-text">One Review Recieved</p>
-                    <p class="card-text text-success">Amazing</p>
-                    <a href='@Url.Action("ReadMore", "Review")' class="">Read More ></a>
-                </div>
-            </div>
-
-            <div class="card" style="width: 15rem;">
-                <img src="~/Content/img/nokia4.png" class="card-img-top" height="200px" width="200px" alt="...">
-                <p class="text-dark mt-0 mb-0 pl-1">Nokia 8.14GB</p>
-                <p class="text-secondary mt-0 mb-0 pl-1">0 Hours 4 min ago</p>
-                <hr>
-                <div class="card-body mt-0 pt-0">
-                    <p class="card-text">&starf; &starf; &starf; &starf; &star;</p>
-                    <p class="card-text">One Review Recieved</p>
-                    <p class="card-text text-success">Amazing</p>
-                    <a href='@Url.Action("ReadMore", "Review")' class="">Read More ></a>
-                </div>
-            </div>
         </div>
-
     </div>
 
     <! -- new carousal -->
