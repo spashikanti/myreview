@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@model MyReview.Models.ReviewsModel
+<!doctype html>
 <html lang="en">
 <head>
     <!-- Required meta tags -->
@@ -45,7 +46,26 @@
     </div>
 
     <div class="container">
-
+        <h3 class="title text-primary text-center m-3 pt-2">Recent Reviews</h3>
+        <div class="row">
+            @{
+                    if (Model != null)
+                    {
+                        var imgSrc = "/Content/img/" + @Model.ImageName;
+                        <div class="card" style="width: 15rem;">
+                        <img src='@imgSrc' class="card-img-top" height="200px" width="200px" alt="...">
+                        <p class="text-dark mt-0 mb-0 pl-1">@Model.SubCategoryName</p>
+                        <p class="text-secondary mt-0 mb-0 pl-1">@Model.PublishedSince</p>
+                        <hr>
+                        <div class="card-body mt-0 pt-0">
+                            <p class="card-text">&starf; &starf; &starf; &starf; &star;</p>
+                            <p class="card-text">@Model.ReviewTitle</p>
+                            <p class="card-text text-success">@Model.ReviewDescription</p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
     </div>
 
 

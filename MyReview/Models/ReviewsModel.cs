@@ -19,5 +19,11 @@ namespace MyReview.Models
         public int UserId { get; set; }
         public decimal StarRate { get; set; }
         public int TotalLikes { get; set; }
+        public string UserPhoto { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public int CategoryId { get; set; }
+        public int NumOfReviews { get; set; }
+        public bool IsTrending { get; set; }
     }
 }

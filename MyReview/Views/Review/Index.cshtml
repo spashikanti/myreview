@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MyReview.Models.ReviewsModel>
+﻿@model MyReview.Models.ReviewCollectionModel
 <!doctype html>
 <html lang="en">
 <head>
@@ -8,23 +8,96 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
     <title>My Review!</title>
-
     <link href="~/Content/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <script src="~/Scripts/valid.js"></script>
     <style>
         .checked {
             color: orange;
         }
+
+        /*span.stars, span.stars span {
+            display: block;
+            background: url('/Content/img/star.png') 0 -16px repeat-x;
+            width: 80px;
+            height: 16px;
+        }
+
+            span.stars span {
+                background-position: 0 0;
+            }*/
     </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    @*star ratings-start*@
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="~/Content/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/star-rating.js"></script>
+    @*star ratings-end*@
+    <script type="text/javascript">
+
+        //$.fn.stars = function () {
+        //    return $(this).each(function () {
+        //        // Get the value
+        //        var val = parseFloat($(this).html());
+        //        // Make sure that the value is in 0 - 5 range, multiply to get width
+        //        var size = Math.max(0, (Math.min(5, val))) * 16;
+        //        // Create stars holder
+        //        var $span = $('<span />').width(size);
+        //        // Replace the numerical value with stars
+        //        $(this).html($span);
+        //    });
+        //}
+
+        $(document).ready(function () {
+            //$('span.stars').stars();
+
+        var trendingReviews = @Html.Raw(Json.Encode(Model.TrendingReviews));
+        if (trendingReviews != null && trendingReviews.length > 0) {
+            var activeDivStart = '<div class="carousel-item active"><div class="d-none d-lg-block"><div class="slide-box">';
+            var inActiveDivStart = '<div class="carousel-item"><div class="d-none d-lg-block"><div class="slide-box">';
+            var divEnd = '</div></div></div>';
+            var htmlBuilder = "";
+
+            for (var i = 0; i < trendingReviews.length; i++) {
+                //if it is first time
+                if (i == 0) {
+                    htmlBuilder = htmlBuilder + activeDivStart;
+                }//start inactive set for every 5th record
+                else if (i % 4 == 0) {
+                    htmlBuilder = htmlBuilder + inActiveDivStart;
+                }
+                var imgSrc = "/Content/img/" + trendingReviews[i].ImageName;
+                htmlBuilder += '' +
+                    '<div class="col-3 float-left p-1">' +
+                    '    <figure class="bg-secondary p-2">' +
+                    '        <img src="' + imgSrc + '" alt="' + trendingReviews[i].SubCategoryName + '" width="100px" height="100px" />' +
+                    '        <figcaption>' +
+                    '            <p>' + trendingReviews[i].SubCategoryName +'</p>' +
+                    '            <button type="button" class="btn btn-sm btn-outline-primary">' + trendingReviews[i].TotalLikes + '</button>&nbsp &nbsp &nbsp<span>' +
+                    trendingReviews[i].NumOfReviews +' reviews</span>' +
+                    '        </figcaption>' +
+                    '    </figure>' +
+                    '</div>';
+
+                //for set 4 records, so check if it is 4th then end the set
+                if (i + 1 % 4 == 0) {
+                    htmlBuilder = htmlBuilder + divEnd;
+                }//check if it is last record then end the div tag
+                else if (i == trendingReviews.length - 1) {
+                    htmlBuilder = htmlBuilder + divEnd;
+                }
+            }//for loop ends
+
+            $("#divTrending").append(htmlBuilder);
+            }
+        });
+
+    </script>
 </head>
 <body>
     <nav class="navbar navbar-light navbar-expand-xs" style="background-color: #e3f2fd;">
@@ -70,9 +143,11 @@
         <h3 class="title text-primary text-center m-3 pt-2">Recent Reviews</h3>
         <div class="row">
             @{
-                    if (Model != null)
+                if (Model != null)
+                {
+                    if (Model.TopRecentReviews != null && Model.TopRecentReviews.Count > 0)
                     {
-                        foreach (var item in Model)
+                        foreach (var item in Model.TopRecentReviews)
                         {
                             var imgSrc = "/Content/img/" + item.ImageName;
                             <div class="card" style="width: 15rem;">
@@ -81,238 +156,27 @@
                                 <p class="text-secondary mt-0 mb-0 pl-1">@item.PublishedSince</p>
                                 <hr>
                                 <div class="card-body mt-0 pt-0">
-                                    <p class="card-text">&starf; &starf; &starf; &starf; &star;</p>
+                                    <input id="input-21e" value='@item.ProductRate' type="text" class="rating" data-min=0 data-max=5 data-step=0.5 data-size="xs"
+                                      disabled="disabled"      title="">
+                                    @*<span class="stars">@item.ProductRate</span>*@
+                                    <p class="card-text"></p>
                                     <p class="card-text">@item.ReviewTitle</p>
                                     <p class="card-text text-success">@item.ReviewDescription</p>
-                                    <a href='@Url.Action("ReadMore", "Review")' class="">Read More ></a>
+                                    <a href='@Url.Action("ReadMore", "Review", new { reviewId = item.ReviewId })' class="">Read More ></a>
                                 </div>
                             </div>
+                        }
                     }
                 }
             }
         </div>
     </div>
-
     <! -- new carousal -->
     <div class="container">
         <h3 class="text-primary text-center m-2 p-2">Trending On My Reviews</h3>
         <div class="row">
             <div id="carousel" class="carousel slide" data-ride="carousel">
-                <!--  <ol class="carousel-indicators">
-                   <li data-target="#carousel" data-slide-to="0" class="active"></li>
-                   <li data-target="#carousel" data-slide-to="1"></li>
-                 </ol> -->
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="d-none d-lg-block">
-                            <div class="slide-box">
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-none d-md-block d-lg-none">
-                            <div class="slide-boxs">
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-none d-sm-block d-md-none">
-                            <div class="slide-box">
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-block d-sm-none">
-
-                            <figure class="bg-secondary p-2">
-                                <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                <figcaption>
-                                    <p>NIIT Ltd</p>
-                                    <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                </figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="d-none d-lg-block">
-                            <div class="slide-box">
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-none d-md-block d-lg-none">
-                            <div class="slide-box">
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-none d-sm-block d-md-none">
-                            <div class="slide-box">
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-3 float-left p-1">
-                                    <figure class="bg-secondary p-2">
-                                        <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                        <figcaption>
-                                            <p>NIIT Ltd</p>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                        </figcaption>
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-block d-sm-none">
-
-                            <figure class="bg-secondary p-2">
-                                <img src="~/Content/img/nokia1.png" alt="The Pulpit Rock" width="100px" height="100px" />
-                                <figcaption>
-                                    <p>NIIT Ltd</p>
-                                    <button type="button" class="btn btn-sm btn-outline-primary">1.81K</button>&nbsp &nbsp &nbsp<span>106 reviews</span>
-                                </figcaption>
-                            </figure>
-                        </div>
-                    </div>
+                <div class="carousel-inner" id="divTrending">
                 </div>
                 <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -325,8 +189,6 @@
             </div>
         </div>
     </div>
-
-
     <footer class="" style="background-color: #e3f2fd;">
         <div class="container">
             <div class="row">
@@ -374,8 +236,5 @@
     </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-
-
-
 </body>
 </html>

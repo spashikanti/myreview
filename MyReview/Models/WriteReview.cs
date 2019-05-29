@@ -14,12 +14,10 @@ namespace MyReview.Models
         public string AvgStarRate { get; set; }
         public string TotalLikes { get; set; }
         public string ReviewTitle { get; set; }
-
         public string ReviewDescription { get; set; }
         public string IsLikeProduct { get; set; }
         public string IsApproved { get; set; }
         public string FileName { get; set; }
-
-        public string UserEmail { get; set; }
+        public string UserEmail { get; set; }        
     }
 }
