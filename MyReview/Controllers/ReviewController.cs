@@ -75,6 +75,12 @@ namespace MyReview.Controllers
         }
         public ActionResult AllReview()
         {
+            List<ReviewsModel> rcModel = new List<ReviewsModel>();
+            rcModel = GetAllReviews();
+            if (rcModel != null)
+            {
+                return View(rcModel);
+            }
             return View();
         }
         public ActionResult ReadMore(int reviewId)
@@ -316,6 +322,58 @@ namespace MyReview.Controllers
 
             }
             return objReview;
+        }
+        public List<ReviewsModel> GetAllReviews()
+        {
+            List<ReviewsModel> listRecentReview = null;
+            if (Session["LoggedInUser"] != null)
+            {
+                UserModel um = (UserModel)Session["LoggedInUser"];
+                string connStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ToString();
+                using (SqlConnection con = new SqlConnection(connStr))
+                {
+                    string query = "AllReviews";
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        try
+                        {
+                            cmd.Connection = con;
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            cmd.Parameters.Add("@UserID", System.Data.SqlDbType.Int).Value = um.UserId;
+                            con.Open();
+                            using (SqlDataReader sdr = cmd.ExecuteReader())
+                            {
+                                listRecentReview = new List<ReviewsModel>();
+                                while (sdr.Read())
+                                {
+                                    listRecentReview.Add(new ReviewsModel
+                                    {
+                                        SubCategoryId = Convert.ToInt16(sdr["SubCategoryId"]),
+                                        SubCategoryName = sdr["SubCategoryName"].ToString(),
+                                        Description = sdr["Description"].ToString(),
+                                        ImageName = sdr["ImageName"].ToString(),
+                                        ProductRate = sdr["ProductRate"].ToString(),
+                                        ReviewTitle = sdr["ReviewTitle"].ToString(),
+                                        ReviewDescription = sdr["ReviewDescription"].ToString(),
+                                        ReviewId = Convert.ToInt16(sdr["ReviewId"]),
+                                        UserId = Convert.ToInt16(sdr["UserId"])
+
+                                    });
+                                }                            
+                            }
+                            con.Close();
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+                }
+            }
+            else
+            {
+
+            }
+            return listRecentReview;
         }
     }
 }

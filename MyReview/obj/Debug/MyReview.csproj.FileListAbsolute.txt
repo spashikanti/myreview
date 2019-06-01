@@ -471,7 +471,6 @@ D:\Data\Development\MyApps\MyReview\MyReview\bin\Antlr3.Runtime.pdb
 D:\Data\Development\MyApps\MyReview\MyReview\bin\System.Diagnostics.DiagnosticSource.xml
 D:\Data\Development\MyApps\MyReview\MyReview\bin\Microsoft.AspNet.TelemetryCorrelation.xml
 D:\Data\Development\MyApps\MyReview\MyReview\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Data\Development\MyApps\MyReview\MyReview\obj\Debug\MyReview.csprojAssemblyReference.cache
 D:\Data\Development\MyApps\MyReview\MyReview\obj\Debug\MyReview.csproj.CoreCompileInputs.cache
 D:\Data\Development\MyApps\MyReview\MyReview\obj\Debug\MyReview.csproj.CopyComplete
 D:\Data\Development\MyApps\MyReview\MyReview\obj\Debug\MyReview.dll
