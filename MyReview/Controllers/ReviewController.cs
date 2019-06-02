@@ -81,6 +81,7 @@ namespace MyReview.Controllers
             {
                 return View(rcModel);
             }
+
             return View();
         }
         public ActionResult ReadMore(int reviewId)
