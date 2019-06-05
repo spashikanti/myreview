@@ -19,6 +19,12 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    @*star ratings-start*@
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="~/Content/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/star-rating.js"></script>
+    @*star ratings-end*@
 </head>
 <body>
     <nav class="navbar navbar-light navbar-expand-xs" style="background-color: #e3f2fd;">
@@ -52,25 +58,24 @@
                                     <div class="media-body">
                                         <div>
                                             <h4 class="media-heading">
-                                                <a href="#" class="blue">Balloon Decoration 2</a>
+                                                <a href="#" class="blue">@item.SubCategoryName</a>
                                             </h4>
                                         </div>
                                         @*<div>
-                                            <h4 class="media-heading">
-                                                <a href="#" class="blue">Partner Name</a>
-                                            </h4>
-                                        </div>*@
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
+            <h4 class="media-heading">
+                <a href="#" class="blue">Partner Name</a>
+            </h4>
+        </div>*@
+                                        @*<span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+        <span class="fa fa-star"></span>*@
+                                        <input id="input-21eRead" value='@item.ProductRate' type="text" class="rating" data-min=0 data-max=5 data-step=0.5 data-size="xs"
+                                               disabled="disabled" title="">
                                         <p>
-                                            <b>Your Review</b><br>
-                                            §  Satin cloth backdrop of 12 x 7 feet
-                                            §  2 balloon pillars 7 feet as show in the image
-                                            §  Backdrop decoration with 10 rows of serial lights 3 balloon bunches and hanging netted cloth
-                                            §  4 LED power cans will be placed on the stage
+                                            <b>@item.ReviewTitle</b><br>
+                                            @item.ReviewDescription
                                         </p>
                                     </div>
                                 </div>
