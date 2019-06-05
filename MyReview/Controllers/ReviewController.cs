@@ -63,7 +63,7 @@ namespace MyReview.Controllers
         [HttpPost]
         public ActionResult AddReview(FormCollection f, HttpPostedFileBase file)
         {
-            HttpStatusCode hp = InsertReviewDetails(f["hdCategoryId"].ToString(), f["hdSubCategoryId"].ToString(), Convert.ToDecimal(f["hdStarRating"].ToString()), f["reviewtitle"].ToString(), f["comment"].ToString()
+            HttpStatusCode hp = InsertReviewDetails(f["hdCategoryId"].ToString(), f["hdSubCategoryId"].ToString(), Convert.ToDecimal(f["hdStarRating"]), f["reviewtitle"].ToString(), f["comment"].ToString()
                 , Convert.ToBoolean(f["optradio"]), file);
 
             if (hp.ToString() == "Created")
@@ -93,7 +93,18 @@ namespace MyReview.Controllers
             }
             return View();
         }
+        [HttpPost]
+        public ActionResult ReadMore(FormCollection f)
+        {
+            HttpStatusCode hp = InsertReviewVoting(Convert.ToInt16(f["hdReviewId"]), Convert.ToBoolean(f["optradio"]), Convert.ToDecimal(f["hdStarRating"]));
 
+            if (hp.ToString() == "Created")
+            {
+                //success page
+            }
+            //else error page
+            return View("ReadMore");
+        }
         private List<SubCategoryModel> GetSearchItems(string keyword)
         {
             List<SubCategoryModel> items = new List<SubCategoryModel>();
@@ -178,7 +189,6 @@ namespace MyReview.Controllers
             }
             return HttpStatusCode.Created;
         }
-
         public List<ReviewsModel> GetRecentReviews()
         {
             List<ReviewsModel> listRecentReview = null;
@@ -285,7 +295,7 @@ namespace MyReview.Controllers
                 string connStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ToString();
                 using (SqlConnection con = new SqlConnection(connStr))
                 {
-                    string query = "GetReviewById";
+                    string query = "ReadMoreReviews";
                     using (SqlCommand cmd = new SqlCommand(query))
                     {
                         try
@@ -308,6 +318,7 @@ namespace MyReview.Controllers
                                     objReview.UserPhoto = sdr["Photo"].ToString();
                                     objReview.UserName = sdr["UserName"].ToString();
                                     objReview.Email = sdr["Email"].ToString();
+                                    objReview.Votes = Convert.ToInt16(sdr["votes"]);
                                 }
                             }
                             con.Close();
@@ -376,5 +387,42 @@ namespace MyReview.Controllers
             }
             return listRecentReview;
         }
+        public HttpStatusCode InsertReviewVoting(int reviewID, bool isLikeProduct, decimal starRating)
+        {
+            if (Session["LoggedInUser"] != null)
+            {
+                UserModel um = (UserModel)Session["LoggedInUser"];
+                string connStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ToString();
+                string sql = "dbo.InsertVoteDetails";
+                using (SqlConnection conn = new SqlConnection(connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand(sql))
+                    {
+                        cmd.Connection = conn;
+                        try
+                        {
+                            string fileName = string.Empty;
+                            cmd.Parameters.Add("@reviewID", System.Data.SqlDbType.Int).Value = reviewID;
+                            cmd.Parameters.Add("@UserId", System.Data.SqlDbType.Int).Value = um.UserId;
+                            cmd.Parameters.Add("@StarRate", System.Data.SqlDbType.Decimal).Value = starRating;
+                            cmd.Parameters.Add("@IsLike", System.Data.SqlDbType.Bit).Value = isLikeProduct;
+                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                        catch (Exception ex)
+                        {
+                            return HttpStatusCode.BadRequest;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return HttpStatusCode.Unauthorized;
+            }
+            return HttpStatusCode.Created;
+        }
+
     }
 }

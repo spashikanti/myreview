@@ -25,5 +25,6 @@ namespace MyReview.Models
         public int CategoryId { get; set; }
         public int NumOfReviews { get; set; }
         public bool IsTrending { get; set; }
+        public int Votes { get; set; }
     }
 }

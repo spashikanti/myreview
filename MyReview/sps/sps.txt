@@ -228,6 +228,227 @@ END;
 GO
 
 
+USE [MyReview]
+GO
+/****** Object:  StoredProcedure [dbo].[InsertVoteDetails]    Script Date: 6/4/2019 10:34:01 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[InsertVoteDetails] 
+    @reviewID int,
+	@UserId int,
+	@IsLike bit,
+	@StarRate numeric(4,2)
+
+	
+AS  
+
+BEGIN TRANSACTION
+
+INSERT INTO [dbo].[Vote]
+           ([ReviewId]
+           ,[UserId]
+           ,[IsLike]
+           ,[StarRate])
+     VALUES
+           (@reviewID, @UserId,@IsLike,@StarRate)
+           
+
+-- Rollback the transaction if there were any errors
+IF @@ERROR <> 0
+ BEGIN
+    -- Rollback the transaction
+    ROLLBACK
+
+    -- Raise an error and return
+    RAISERROR ('Error in inserting reviews.', 16, 1)
+    RETURN
+ END
+ELSE
+  BEGIN
+  --- Update review Table
+  declare @totallikes int ,@numofreviews int ,@AvgStar numeric(5,2)
+
+  Select @totallikes = count(*) from [dbo].[Vote] where [ReviewId] =@reviewID And [IsLike] =1
+  select @numofreviews =count(*) from [dbo].[Vote] where [ReviewId] = @reviewID
+  Select @AvgStar = SUM([StarRate])/ @numofreviews from [dbo].[Vote] where [ReviewId] = @reviewID
+     UPDATE [dbo].[ReviewDetails]
+   SET 
+      [AvgStarRate] = @AvgStar,
+      [TotalLikes] = @totallikes      
+      WHERE [ReviewId] = @reviewID
+  END
+
+COMMIT
+
+/*========================================*/
+
+USE [MyReview]
+GO
+/****** Object:  StoredProcedure [dbo].[InsertVoteDetails]    Script Date: 6/5/2019 8:53:51 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[InsertVoteDetails] 
+    @reviewID int,
+	@UserId int,
+	@IsLike bit,
+	@StarRate numeric(4,2)
+
+	
+AS  
+
+BEGIN TRANSACTION
+
+INSERT INTO [dbo].[Vote]
+           ([ReviewId]
+           ,[UserId]
+           ,[IsLike]
+           ,[StarRate])
+     VALUES
+           (@reviewID, @UserId,@IsLike,@StarRate)
+           
+
+-- Rollback the transaction if there were any errors
+IF @@ERROR <> 0
+ BEGIN
+    -- Rollback the transaction
+    ROLLBACK
+
+    -- Raise an error and return
+    RAISERROR ('Error in inserting reviews.', 16, 1)
+    RETURN
+ END
+ELSE
+  BEGIN
+  --- Update review Table
+  declare @totallikes int ,@numofreviews int ,@AvgStar numeric(5,2)
+
+  Select @totallikes = count(*) from [dbo].[Vote] where [ReviewId] =@reviewID And [IsLike] =1
+  select @numofreviews =count(*) from [dbo].[Vote] where [ReviewId] = @reviewID
+  Select @AvgStar = SUM([StarRate])/ @numofreviews from [dbo].[Vote] where [ReviewId] = @reviewID
+     UPDATE [dbo].[ReviewDetails]
+   SET 
+      [AvgStarRate] = @AvgStar,
+      [TotalLikes] = @totallikes      
+      WHERE [ReviewId] = @reviewID
+  END
+
+COMMIT
+
+
+/*============================================*/
+
+USE [MyReview]
+GO
+/****** Object:  StoredProcedure [dbo].[AllReviews]    Script Date: 6/5/2019 8:54:34 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[AllReviews]
+	@UserID    int
+AS
+BEGIN
+	SET NOCOUNT ON;
+   
+	SELECT SC.[SubCategoryId] 
+      ,SC.[SubCategoryName]
+      ,SC.[Description]
+      ,SC.[ImageName]
+      ,RD.[ProductRate]
+	  ,RD.ReviewDescription
+	  ,RD.ReviewTitle
+	  ,RD.ReviewId
+	  ,UM.UserId	  
+      
+  FROM [dbo].[SubCategory] SC
+  Inner JOIN Category C  ON SC.CategoryId = C.CategoryId 
+  Inner JOIN ReviewDetails RD ON RD.SubCategoryId =SC.SubCategoryId
+  Inner Join UserMaster UM  ON UM.UserId =RD.UserId
+  where UM.UserId =@UserID
+  
+END 
+ 
+/*============================================*/
+
+
+USE [MyReview]
+GO
+/****** Object:  StoredProcedure [dbo].[GetTrendingReviews]    Script Date: 6/5/2019 8:56:58 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[GetTrendingReviews]
+	--@prodname    nvarchar
+AS
+BEGIN
+	SET NOCOUNT ON;
+   
+	SELECT SC.[SubCategoryId] 
+      ,SC.[SubCategoryName]
+      ,SC.[Description]
+      ,SC.[ImageName]
+      ,SC.[CategoryId]
+	  ,SC.[IsTrending]
+	  , (Select Count(*) from [dbo].[ReviewDetails] RD1 
+	      where RD1.SubCategoryId =Sc.SubCategoryId) As NumberofReviews     
+	 FROM [dbo].[SubCategory] SC Where SC.[IsTrending]=1
+
+  
+END
+
+
+*******************************************************************
+
+
+USE [MyReview]
+GO
+/****** Object:  StoredProcedure [dbo].[ReadMoreReviews]    Script Date: 6/5/2019 8:57:55 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ReadMoreReviews]
+	@reviewID    int
+AS
+BEGIN
+	SET NOCOUNT ON;
+	declare @totallikes int
+   Select @totallikes = count(*) from [dbo].[Vote] where [ReviewId] =@reviewID And [IsLike] =1
+	SELECT  SC.[SubCategoryId] 
+      ,SC.[SubCategoryName]
+      ,SC.[ImageName]
+      ,RD.ReviewId
+	  ,RD.[ProductRate]
+	  ,RD.ReviewDescription
+	  ,RD.ReviewTitle
+	  ,UM.Photo
+	  ,UM.UserName
+	  ,UM.Email
+	  ,@totallikes as votes
+	  
+  FROM [dbo].[SubCategory] SC
+  Inner JOIN Category C  ON SC.CategoryId = C.CategoryId 
+  Inner JOIN ReviewDetails RD ON RD.SubCategoryId =SC.SubCategoryId
+  Inner Join UserMaster UM  ON UM.UserId =RD.UserId
+  Where RD.ReviewId = @reviewID 
+
+END
+
+--ReadMoreReviews 2
+
+**************************************************************
+
 
 
 

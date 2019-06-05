@@ -5,17 +5,63 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
+    @*<script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
     <script src="~/Scripts/popper.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/valid.js"></script>
+    <script src="~/Scripts/valid.js"></script>*@
     <!-- Bootstrap CSS -->
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <title>My Review!</title>
-    <link href="~/Content/style.css" rel="stylesheet" />
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
+    <title>Read More</title>
+    @*<link href="~/Content/style.css" rel="stylesheet" />*@
+    @*star ratings-start*@
+    @*<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="~/Content/star-rating.css" media="all" rel="stylesheet" type="text/css" />*@
+    @*star ratings-end*@
+    @*<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>*@
+    @*star ratings-start*@
+    @*<script src="~/Scripts/star-rating.js"></script>*@
+    @*star ratings-end*@
 
+
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="~/Scripts/valid.js"></script>
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    @*star ratings-start*@
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="~/Content/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+    @*star ratings-end*@
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    @*star ratings-start*@
+    <script src="~/Scripts/star-rating.js"></script>
+    @*star ratings-end*@
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            var curModel = @Html.Raw(Json.Encode(Model));
+            $("#hdReviewId").val(curModel.ReviewId);
+
+            $('#input-21e').on(
+                'change', function () {
+                    $("#hdStarRating").val($(this).val());
+                });
+
+        });
+    </script>
 </head>
 <body>
+    
     <nav class="navbar navbar-light navbar-expand-xs" style="background-color: #e3f2fd;">
         <!-- Navbar content -->
         <a class="navbar-brand" href="#">
@@ -29,94 +75,136 @@
             <nav class="nav">
                 <a class="nav-link active " href="#">Login</a>
                 <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-danger">Sign Up</button></a>
-                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("WriteReview","Review" )'">Write a Review</button></a>
-                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("Index","Review" )'">My Review</button></a>
-                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("AllReview","Review" )'">All Review</button></a>
+                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("WriteReview", "Review")'">Write a Review</button></a>
+                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("Index", "Review")'">My Review</button></a>
+                <a class="nav-link m-0 p-1" href="#"><button type="button" class="btn btn-sm btn-outline-success" onclick="location.href='@Url.Action("AllReview", "Review")'">All Review</button></a>
             </nav>
         </div>
     </nav>
     <div id="carouselExampleControls">
+        @using (Html.BeginForm("ReadMore", "Review", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        { 
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="~/Content/img/Read more.jpg" height="500px;" class="d-block w-100" alt="...">
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="container">
-        <h3 class="title text-primary text-center m-3 pt-2">Recent Reviews</h3>
-        <div class="row">
+            <input type="hidden" name="hdReviewId" id="hdReviewId" />
+            <input type="hidden" name="hdStarRating" id="hdStarRating" />
             @{
-                    if (Model != null)
-                    {
-                        var imgSrc = "/Content/img/" + @Model.ImageName;
-                        <div class="card" style="width: 15rem;">
-                        <img src='@imgSrc' class="card-img-top" height="200px" width="200px" alt="...">
-                        <p class="text-dark mt-0 mb-0 pl-1">@Model.SubCategoryName</p>
-                        <p class="text-secondary mt-0 mb-0 pl-1">@Model.PublishedSince</p>
-                        <hr>
-                        <div class="card-body mt-0 pt-0">
-                            <p class="card-text">&starf; &starf; &starf; &starf; &star;</p>
-                            <p class="card-text">@Model.ReviewTitle</p>
-                            <p class="card-text text-success">@Model.ReviewDescription</p>
-                        </div>
-                    </div>
+                if (Model != null)
+                {
+                    <h4>@Model.ReviewTitle</h4>
                 }
             }
-        </div>
-    </div>
 
+            <div class="carousel-item active">
+                @*<img src="~/Content/img/Read more.jpg" height="500px;" class="d-block w-100" alt="...">*@
+                <div class="row">
+                    @{
+                        if (Model != null)
+                        {
+                            var imgSrc = "/Content/img/" + @Model.ImageName;
+                            var userPhoto = "/UserProfilePhoto/" + @Model.UserPhoto;
+                            <div class="col-md-4">
+                                <div class="divborder">
+                                    <img name="imgProduct"
+                                         src="@imgSrc" id="imgProduct" width="300" class="rounded-circle">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row srch-panel" style="height:50px;">
 
-    <footer class="" style="background-color: #e3f2fd;">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <ul class="nav">
-                        <li class="nav-item">
-                            <a class="nav-link active p-1 m-0" href="#">Home |</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-1 m-0" href="#">About Us |</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-1 m-0" href="#">Contact Us |</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-1 m-0" href="#">Terms & Conditions |</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-1 m-0" href="#">Blog |</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-1 m-0" href="#">Help</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <ul class="nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#"><img src="~/Content/img/facebook.png" width="40px" height="40px" /></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><img src="~/Content/img/linkedin.png" width="40px" height="40px" /></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><img src="~/Content/img/google.png" width="40px" height="40px" /></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><img src="~/Content/img/twitter.png" width="40px" height="40px" /></a>
-                        </li>
-                    </ul>
+                                </div>
+                                <div class="row divborder" style="height:50px !important;">
+                                    <div class="col-md-4">
+                                        <input id="input-21eRead" value='@Model.ProductRate' type="text" class="rating" data-min=0 data-max=5 data-step=0.5 data-size="xs"
+                                               disabled="disabled" title="">
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Model.Votes Votes
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div style="padding:25px;">
+                                        <div class="col-md-4">
+                                            <img name="imgProduct"
+                                                 src="@userPhoto" id="imgProduct" width="150" class="rounded-circle">
+                                            <h5>@Model.UserName</h5>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @Model.ReviewDescription
+                                            <div class="row">
+                                                <div class="radio">
+                                                    <label><span class="red">*</span> <span class="serch-input">Do you like this review?</span>  </label>  &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <label><input type="radio" name="optradio" value="True" checked>Yes</label>
+                                                    <label><input type="radio" name="optradio" value="False">No</label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label><span class="red">*</span><span class="serch-input">Star Rating</span></label>
+                                                    <input id="input-21e" value="0" type="text" class="rating" data-min=0 data-max=5 data-step=0.5 data-size="xs"
+                                                           title="">
+                                                </div>
+                                                <div class="mt-top">
+                                                    <input type="submit" class="btn-success" style="margin-left:30px;" value="Submit Review" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    <div class="container">&nbsp;<br /><br /><br /></div>
+                    <div class="container">&nbsp;<br /><br /><br /></div>
                 </div>
             </div>
         </div>
-        <p class="text-center text-dark p-2 m-2">copyright&copy;2019 - All Rights Reserved</p>
-    </footer>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-
+        }
+    </div>
+                    <footer class="" style="background-color: #e3f2fd;">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a class="nav-link active p-1 m-0" href="#">Home |</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1 m-0" href="#">About Us |</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1 m-0" href="#">Contact Us |</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1 m-0" href="#">Terms & Conditions |</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1 m-0" href="#">Blog |</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1 m-0" href="#">Help</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#"><img src="~/Content/img/facebook.png" width="40px" height="40px" /></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#"><img src="~/Content/img/linkedin.png" width="40px" height="40px" /></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#"><img src="~/Content/img/google.png" width="40px" height="40px" /></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#"><img src="~/Content/img/twitter.png" width="40px" height="40px" /></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center text-dark p-2 m-2">copyright&copy;2019 - All Rights Reserved</p>
+                    </footer>
+                    <!-- Optional JavaScript -->
+                    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
 </body>
 </html>
