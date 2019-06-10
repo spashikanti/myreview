@@ -11,8 +11,10 @@ using System.Web.Mvc;
 
 namespace MyReview.Controllers
 {
+    [Authorize]
     public class ReviewController : Controller
     {
+        [AllowAnonymous]
         // GET: Review
         public ActionResult Index()
         {
@@ -32,6 +34,7 @@ namespace MyReview.Controllers
             }
             return View();
         }
+        [AllowAnonymous]
         [HttpPost]
         public JsonResult Index(string keyword)
         {
@@ -73,6 +76,7 @@ namespace MyReview.Controllers
             //else error page
                 return View("WriteReview");
         }
+        [AllowAnonymous]
         public ActionResult AllReview()
         {
             List<ReviewsModel> rcModel = new List<ReviewsModel>();
@@ -84,6 +88,7 @@ namespace MyReview.Controllers
 
             return View();
         }
+        
         public ActionResult ReadMore(int reviewId)
         {
             ReviewsModel listRecentReviewItem = GetReviewById(reviewId);
@@ -189,101 +194,89 @@ namespace MyReview.Controllers
             }
             return HttpStatusCode.Created;
         }
+        [AllowAnonymous]
         public List<ReviewsModel> GetRecentReviews()
         {
             List<ReviewsModel> listRecentReview = null;
-            if (Session["LoggedInUser"] != null)
+            string connStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ToString();
+            using (SqlConnection con = new SqlConnection(connStr))
             {
-                UserModel um = (UserModel)Session["LoggedInUser"];
-                string connStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ToString();
-                using (SqlConnection con = new SqlConnection(connStr))
+                string query = "GetTop4ProductReviews";
+                using (SqlCommand cmd = new SqlCommand(query))
                 {
-                    string query = "GetTop4ProductReviews";
-                    using (SqlCommand cmd = new SqlCommand(query))
+                    try
                     {
-                        try
+                        cmd.Connection = con;
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        con.Open();
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
                         {
-                            cmd.Connection = con;
-                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                            con.Open();
-                            using (SqlDataReader sdr = cmd.ExecuteReader())
+                            listRecentReview = new List<ReviewsModel>();
+                            while (sdr.Read())
                             {
-                                listRecentReview = new List<ReviewsModel>();
-                                while (sdr.Read())
+                                listRecentReview.Add(new ReviewsModel
                                 {
-                                    listRecentReview.Add(new ReviewsModel
-                                    {
-                                        ReviewId = Convert.ToInt16(sdr["ReviewId"]),
-                                        SubCategoryName = sdr["SubCategoryName"].ToString(),
-                                        Description = sdr["Description"].ToString(),
-                                        ImageName = sdr["ImageName"].ToString(),
-                                        ProductRate = sdr["ProductRate"].ToString(),
-                                        ReviewTitle = sdr["ReviewTitle"].ToString(),
-                                        ReviewDescription = sdr["ReviewDescription"].ToString(),
-                                        PublishedSince = sdr["PublishedSince"].ToString()
-                                    });
-                                }
+                                    ReviewId = Convert.ToInt16(sdr["ReviewId"]),
+                                    SubCategoryName = sdr["SubCategoryName"].ToString(),
+                                    Description = sdr["Description"].ToString(),
+                                    ImageName = sdr["ImageName"].ToString(),
+                                    ProductRate = sdr["ProductRate"].ToString(),
+                                    ReviewTitle = sdr["ReviewTitle"].ToString(),
+                                    ReviewDescription = sdr["ReviewDescription"].ToString(),
+                                    PublishedSince = sdr["PublishedSince"].ToString()
+                                });
                             }
-                            con.Close();
                         }
-                        catch (Exception ex)
-                        {
-                        }
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
                     }
                 }
             }
-            else
-            {
-                
-            }
+
             return listRecentReview;
         }
+        [AllowAnonymous]
         public List<ReviewsModel> GetTrendingReviews()
         {
             List<ReviewsModel> listRecentReview = null;
-            if (Session["LoggedInUser"] != null)
+            string connStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ToString();
+            using (SqlConnection con = new SqlConnection(connStr))
             {
-                UserModel um = (UserModel)Session["LoggedInUser"];
-                string connStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ToString();
-                using (SqlConnection con = new SqlConnection(connStr))
+                string query = "GetTrendingReviews";
+                using (SqlCommand cmd = new SqlCommand(query))
                 {
-                    string query = "GetTrendingReviews";
-                    using (SqlCommand cmd = new SqlCommand(query))
+                    try
                     {
-                        try
+                        cmd.Connection = con;
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        con.Open();
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
                         {
-                            cmd.Connection = con;
-                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                            con.Open();
-                            using (SqlDataReader sdr = cmd.ExecuteReader())
+                            listRecentReview = new List<ReviewsModel>();
+                            while (sdr.Read())
                             {
-                                listRecentReview = new List<ReviewsModel>();
-                                while (sdr.Read())
+                                listRecentReview.Add(new ReviewsModel
                                 {
-                                    listRecentReview.Add(new ReviewsModel
-                                    {
-                                        SubCategoryId = Convert.ToInt16(sdr["SubCategoryId"]),
-                                        SubCategoryName = sdr["SubCategoryName"].ToString(),
-                                        Description = sdr["Description"].ToString(),
-                                        ImageName = sdr["ImageName"].ToString(),
-                                        CategoryId = Convert.ToInt16(sdr["CategoryId"]),
-                                        IsTrending = Convert.ToBoolean(sdr["IsTrending"]),
-                                        NumOfReviews = Convert.ToInt16(sdr["NumberofReviews"])
-                                    });
-                                }
+                                    SubCategoryId = Convert.ToInt16(sdr["SubCategoryId"]),
+                                    SubCategoryName = sdr["SubCategoryName"].ToString(),
+                                    Description = sdr["Description"].ToString(),
+                                    ImageName = sdr["ImageName"].ToString(),
+                                    CategoryId = Convert.ToInt16(sdr["CategoryId"]),
+                                    IsTrending = Convert.ToBoolean(sdr["IsTrending"]),
+                                    NumOfReviews = Convert.ToInt16(sdr["NumberofReviews"])
+                                });
                             }
-                            con.Close();
                         }
-                        catch (Exception ex)
-                        {
-                        }
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
                     }
                 }
             }
-            else
-            {
 
-            }
             return listRecentReview;
         }
         public ReviewsModel GetReviewById(int reviewId)
@@ -335,56 +328,52 @@ namespace MyReview.Controllers
             }
             return objReview;
         }
+        [AllowAnonymous]
         public List<ReviewsModel> GetAllReviews()
         {
             List<ReviewsModel> listRecentReview = null;
-            if (Session["LoggedInUser"] != null)
+            string connStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ToString();
+            using (SqlConnection con = new SqlConnection(connStr))
             {
-                UserModel um = (UserModel)Session["LoggedInUser"];
-                string connStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ToString();
-                using (SqlConnection con = new SqlConnection(connStr))
+                string query = "AllReviews";
+                using (SqlCommand cmd = new SqlCommand(query))
                 {
-                    string query = "AllReviews";
-                    using (SqlCommand cmd = new SqlCommand(query))
+                    try
                     {
-                        try
+                        cmd.Connection = con;
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        con.Open();
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
                         {
-                            cmd.Connection = con;
-                            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                            cmd.Parameters.Add("@UserID", System.Data.SqlDbType.Int).Value = um.UserId;
-                            con.Open();
-                            using (SqlDataReader sdr = cmd.ExecuteReader())
+                            listRecentReview = new List<ReviewsModel>();
+                            while (sdr.Read())
                             {
-                                listRecentReview = new List<ReviewsModel>();
-                                while (sdr.Read())
+                                listRecentReview.Add(new ReviewsModel
                                 {
-                                    listRecentReview.Add(new ReviewsModel
-                                    {
-                                        SubCategoryId = Convert.ToInt16(sdr["SubCategoryId"]),
-                                        SubCategoryName = sdr["SubCategoryName"].ToString(),
-                                        Description = sdr["Description"].ToString(),
-                                        ImageName = sdr["ImageName"].ToString(),
-                                        ProductRate = sdr["ProductRate"].ToString(),
-                                        ReviewTitle = sdr["ReviewTitle"].ToString(),
-                                        ReviewDescription = sdr["ReviewDescription"].ToString(),
-                                        ReviewId = Convert.ToInt16(sdr["ReviewId"]),
-                                        UserId = Convert.ToInt16(sdr["UserId"])
+                                    SubCategoryId = Convert.ToInt16(sdr["SubCategoryId"]),
+                                    SubCategoryName = sdr["SubCategoryName"].ToString(),
+                                    CategoryName = sdr["CategoryName"].ToString(),
+                                    Description = sdr["Description"].ToString(),
+                                    ImageName = sdr["ImageName"].ToString(),
+                                    ProductRate = sdr["ProductRate"].ToString(),
+                                    ReviewTitle = sdr["ReviewTitle"].ToString(),
+                                    ReviewDescription = sdr["ReviewDescription"].ToString(),
+                                    ReviewId = Convert.ToInt16(sdr["ReviewId"]),
+                                    UserId = Convert.ToInt16(sdr["UserId"]),
+                                    UserName = sdr["UserName"].ToString(),
+                                    PublishedSince = sdr["PublishedSince"].ToString()
 
-                                    });
-                                }                            
+                                });
                             }
-                            con.Close();
                         }
-                        catch (Exception ex)
-                        {
-                        }
+                        con.Close();
+                    }
+                    catch (Exception ex)
+                    {
                     }
                 }
             }
-            else
-            {
 
-            }
             return listRecentReview;
         }
         public HttpStatusCode InsertReviewVoting(int reviewID, bool isLikeProduct, decimal starRating)

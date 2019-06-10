@@ -9,6 +9,7 @@ namespace MyReview.Models
     {
         public int ReviewId { get; set; }
         public int SubCategoryId { get; set; }
+        public string CategoryName { get; set; }
         public string SubCategoryName { get; set; }
         public string Description { get; set; }
         public string ImageName { get; set; }

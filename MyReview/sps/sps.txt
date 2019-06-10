@@ -147,15 +147,9 @@ GO
 USE [MyReview]
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetTop4ProductReviews]    Script Date: 5/23/2019 9:59:58 AM ******/
-SET ANSI_NULLS ON
-GO
-
 SET QUOTED_IDENTIFIER ON
 GO
-
-
-CREATE PROCEDURE [dbo].[GetTop4ProductReviews]
+ALTER PROCEDURE [dbo].[GetTop4ProductReviews]
 	--@prodname    nvarchar
 AS
 BEGIN
@@ -167,11 +161,12 @@ BEGIN
       ,SC.[ImageName]
       ,SC.[CategoryId]
 	  ,RD.[ProductRate]
-	  ,RD.ReviewDescription
+	  --,RD.ReviewDescription
+	  ,CONCAT(SUBSTRING(RD.ReviewDescription, 1, 50),'....') As ReviewDescription
 	  ,RD.ReviewTitle
 	  ,RD.ReviewId,
 	  RD.[CreatedDate]
-	  ,dbo.[ufngethrmin]('2019-05-20 22:00:00.000')AS PublishedSince
+	  ,dbo.[ufngethrmin](RD.[CreatedDate])AS PublishedSince
 	  ,GETDATE() AS todaysDate
 	  
       
@@ -182,9 +177,9 @@ BEGIN
 
   --,CONVERT(varchar(5),DATEADD(minute,DATEDIFF(minute,RD.[CreatedDate],GETDATE()),0), 114) As PublishedSince
   
-END
+END 
+ 
 
-GO
 ************************************************************************
 
 USE [MyReview]
@@ -347,14 +342,11 @@ COMMIT
 
 USE [MyReview]
 GO
-/****** Object:  StoredProcedure [dbo].[AllReviews]    Script Date: 6/5/2019 8:54:34 AM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 
-CREATE PROCEDURE [dbo].[AllReviews]
-	@UserID    int
+
+
+ALTER PROCEDURE [dbo].[AllReviews]
+	--@UserID    int
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -367,13 +359,16 @@ BEGIN
 	  ,RD.ReviewDescription
 	  ,RD.ReviewTitle
 	  ,RD.ReviewId
-	  ,UM.UserId	  
+	  ,UM.UserId
+	  ,UM.UserName
+	  ,dbo.[ufngethrmin](RD.[CreatedDate])AS PublishedSince
+	  ,C.CategoryName
       
   FROM [dbo].[SubCategory] SC
   Inner JOIN Category C  ON SC.CategoryId = C.CategoryId 
   Inner JOIN ReviewDetails RD ON RD.SubCategoryId =SC.SubCategoryId
   Inner Join UserMaster UM  ON UM.UserId =RD.UserId
-  where UM.UserId =@UserID
+ 
   
 END 
  

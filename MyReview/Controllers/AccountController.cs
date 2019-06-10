@@ -17,7 +17,7 @@ namespace MyReview.Controllers
     public class AccountController : Controller
     {
         
-        public ActionResult Validate(FormCollection f)
+        public ActionResult Validate(FormCollection f, string returnUrl)
         {
             if (IsEmptyValidate(f["txtUserName"].ToString(), f["txtpwd"].ToString()))
             {
@@ -61,6 +61,8 @@ namespace MyReview.Controllers
                                 //else
                                 //    return RedirectToAction("Index", "Review");
                             }
+                            if (!string.IsNullOrEmpty(returnUrl))
+                                return RedirectToLocal(returnUrl);
                             if (Convert.ToBoolean(loggedInUser.UserType))
                                 return RedirectToAction("Index", "Administrator");
                             return RedirectToAction("Index", "Review");
@@ -75,6 +77,15 @@ namespace MyReview.Controllers
                 }
             }
             return View("Login");
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Index", "Review");
         }
         public ActionResult login()
         {

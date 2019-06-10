@@ -58,8 +58,9 @@
                                     <div class="media-body">
                                         <div>
                                             <h4 class="media-heading">
-                                                <a href="#" class="blue">@item.SubCategoryName</a>
+                                                <a href="#" class="blue">@item.ReviewTitle</a>
                                             </h4>
+                                            Review on:<b>@item.SubCategoryName</b> in <b>@item.CategoryName</b>
                                         </div>
                                         @*<div>
             <h4 class="media-heading">
@@ -71,13 +72,13 @@
         <span class="fa fa-star checked"></span>
         <span class="fa fa-star"></span>
         <span class="fa fa-star"></span>*@
-                                        <input id="input-21eRead" value='@item.ProductRate' type="text" class="rating" data-min=0 data-max=5 data-step=0.5 data-size="xs"
-                                               disabled="disabled" title="">
-                                        <p>
-                                            <b>@item.ReviewTitle</b><br>
-                                            @item.ReviewDescription
-                                        </p>
-                                    </div>
+                                        <input style="float:left" id="input-21eRead" value='@item.ProductRate' type="text" class="rating" data-min=0 data-max=5 data-step=0.5 data-size="xs"
+                                               disabled="disabled" title=""><span> By: @item.UserName &nbsp; @item.PublishedSince </span>
+                                            <div>
+                                                @item.ReviewDescription
+                                            </div>
+                                            <a style="float:right" href='@Url.Action("ReadMore", "Review", new { reviewId = item.ReviewId })' class="">read more ></a>
+                                        </div>
                                 </div>
                             </div>
                         </div>

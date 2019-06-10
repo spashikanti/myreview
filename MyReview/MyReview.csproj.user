@@ -26,15 +26,14 @@
         <WebProjectProperties>
           <StartPageUrl>
           </StartPageUrl>
-          <StartAction>SpecificPage</StartAction>
+          <StartAction>URL</StartAction>
           <AspNetDebugging>True</AspNetDebugging>
           <SilverlightDebugging>False</SilverlightDebugging>
           <NativeDebugging>False</NativeDebugging>
           <SQLDebugging>False</SQLDebugging>
           <ExternalProgram>
           </ExternalProgram>
-          <StartExternalURL>
-          </StartExternalURL>
+          <StartExternalURL>http://localhost:61893/Review/Index</StartExternalURL>
           <StartCmdLineArguments>
           </StartCmdLineArguments>
           <StartWorkingDirectory>
