@@ -146,7 +146,9 @@ GO
 
 USE [MyReview]
 GO
-
+/****** Object:  StoredProcedure [dbo].[GetTop4ProductReviews]    Script Date: 6/11/2019 8:34:13 PM ******/
+SET ANSI_NULLS ON
+GO
 SET QUOTED_IDENTIFIER ON
 GO
 ALTER PROCEDURE [dbo].[GetTop4ProductReviews]
@@ -173,11 +175,14 @@ BEGIN
   FROM [dbo].[SubCategory] SC
   Inner JOIN Category C  ON SC.CategoryId = C.CategoryId 
   Inner JOIN ReviewDetails RD ON RD.SubCategoryId =SC.SubCategoryId
+  ORDER BY RD.[CreatedDate] DESC 
 
 
   --,CONVERT(varchar(5),DATEADD(minute,DATEDIFF(minute,RD.[CreatedDate],GETDATE()),0), 114) As PublishedSince
   
 END 
+ 
+
  
 
 ************************************************************************
@@ -342,6 +347,11 @@ COMMIT
 
 USE [MyReview]
 GO
+/****** Object:  StoredProcedure [dbo].[AllReviews]    Script Date: 6/11/2019 8:35:48 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 
 
 
@@ -377,13 +387,13 @@ END
 
 USE [MyReview]
 GO
-/****** Object:  StoredProcedure [dbo].[GetTrendingReviews]    Script Date: 6/5/2019 8:56:58 AM ******/
+/****** Object:  StoredProcedure [dbo].[GetTrendingReviews]    Script Date: 6/11/2019 1:05:40 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[GetTrendingReviews]
+ALTER PROCEDURE [dbo].[GetTrendingReviews]
 	--@prodname    nvarchar
 AS
 BEGIN
