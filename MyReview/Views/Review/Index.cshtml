@@ -85,7 +85,7 @@
                     '</div>';
 
                 //for set 4 records, so check if it is 4th then end the set
-                if (i + 1 % 4 == 0) {
+                if ((i + 1) % 4 == 0) {
                     htmlBuilder = htmlBuilder + divEnd;
                 }//check if it is last record then end the div tag
                 else if (i == trendingReviews.length - 1) {
@@ -157,7 +157,7 @@
                                 <hr>
                                 <div class="card-body mt-0 pt-0">
                                     <input id="input-21e" value='@item.ProductRate' type="text" class="rating" data-min=0 data-max=5 data-step=0.5 data-size="xs"
-                                      disabled="disabled"      title="">
+                                           disabled="disabled" title="">
                                     @*<span class="stars">@item.ProductRate</span>*@
                                     <p class="card-text"></p>
                                     <p class="card-text">@item.ReviewTitle</p>
@@ -236,5 +236,13 @@
     </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+
+   
+
+
+
+
+
 </body>
 </html>

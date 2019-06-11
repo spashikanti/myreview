@@ -71,7 +71,7 @@ namespace MyReview.Controllers
 
             if (hp.ToString() == "Created")
             {
-                //success page
+                return Redirect("index");
             }
             //else error page
                 return View("WriteReview");
@@ -175,6 +175,10 @@ namespace MyReview.Controllers
                                 string imgPath = Path.Combine(Server.MapPath("~/ReviewUploads/" + fileName + Path.GetExtension(file.FileName)));
                                 file.SaveAs(imgPath);
                                 cmd.Parameters.Add("@pFileName", System.Data.SqlDbType.NVarChar).Value = fileName + Path.GetExtension(file.FileName);
+                            }
+                            else
+                            {
+                                cmd.Parameters.Add("@pFileName", System.Data.SqlDbType.NVarChar).Value = DBNull.Value;
                             }
                             
                             cmd.CommandType = System.Data.CommandType.StoredProcedure;

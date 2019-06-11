@@ -19,6 +19,7 @@ namespace MyReview.Controllers
         
         public ActionResult Validate(FormCollection f, string returnUrl)
         {
+            string r = ViewBag.ReturnUrl;
             if (IsEmptyValidate(f["txtUserName"].ToString(), f["txtpwd"].ToString()))
             {
                 string connStr = ConfigurationManager.ConnectionStrings["ConnectionString"].ToString();
@@ -87,8 +88,9 @@ namespace MyReview.Controllers
             }
             return RedirectToAction("Index", "Review");
         }
-        public ActionResult login()
+        public ActionResult login(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
         // GET: Account

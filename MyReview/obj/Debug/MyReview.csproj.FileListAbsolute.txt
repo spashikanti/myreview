@@ -475,4 +475,3 @@ D:\Data\Development\MyApps\MyReview\MyReview\obj\Debug\MyReview.csproj.CoreCompi
 D:\Data\Development\MyApps\MyReview\MyReview\obj\Debug\MyReview.csproj.CopyComplete
 D:\Data\Development\MyApps\MyReview\MyReview\obj\Debug\MyReview.dll
 D:\Data\Development\MyApps\MyReview\MyReview\obj\Debug\MyReview.pdb
-D:\Data\Development\MyApps\MyReview\MyReview\obj\Debug\MyReview.csprojAssemblyReference.cache
